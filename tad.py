@@ -6,7 +6,7 @@ class Node:
 
 #------------------------Node Creation-----------------------------#
 def createNode():
-	return Node()
+		return Node()
 	
 #------------------------Empty Tree-----------------------------#
 def emptyTree(abb):
@@ -15,9 +15,6 @@ def emptyTree(abb):
 	abb.right = None
 
 #------------------------ Recursive Insert----------------------#
-
-
-
 def insert_r(abb,key):
 	if abb == None:
 		newnode = createNode()
@@ -35,35 +32,35 @@ def insert_r(abb,key):
 				abb.right = createNode()
 			insert_r(abb.right,key)
 			
-			
-
-
 #------------------------ Iterative Insert----------------------#
 def insert_i(abb,key):
 	new_node = createNode()
 	new_node.key = key
 	if abb.key == None:
-		abb = new_node			
+		abb.key = key			
 	else :
-		if new_node.key < abb.key :
-			son = abb
-			father = createNode()
-			while son.key != None and son.key != key:
-				father = son
-				if key < son.key :
-					son = son.left
-				else :
-					son = son.right
-					
-			if son.key == None :
-				if key < father.key :
-					father.left = new_node
-				else :
-					father.right = new_node
-						
+		son = abb
+		father = None
+		while son.key != None and son.key != key:
+			father = son
+			if key < son.key :
+				if son.left == None:
+					son.left = createNode()
+				son = son.left
+			else :
+				if son.right == None:
+					son.right = createNode()
+				son = son.right
+				
+		if son.key == None :
+			if key < father.key :
+				father.left = new_node
+			else :
+				father.right = new_node
+		
 #------------------------Insert key----------------------#	
 def	insertKey(abb,key):
-	insert_r(abb,key)
+	insert_i(abb,key)
 		
 #------------------------ Recursive Search----------------------#
 def search_r(abb,key):
@@ -198,39 +195,3 @@ def erase_i(abb,key):
 #------------------------ Erase Key----------------------#				
 def eraseKey(abb,key):
 	erase_r(abb,key)
-				
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-				
-				
-				
