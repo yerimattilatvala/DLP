@@ -15,22 +15,21 @@ func error(s string){
 	fmt.Printf(s)
 }
 
-func createNodeA() ABB{
-	a:= new(tNodeA)
+func createNodeA(a ABB){
+	a = new(tNodeA)
 	if a == nil {
 		error("  *** abb.createNodeA : No memory\n")
 	}
-	return a
 }
 
-func emptyTree(a ABB) ABB{
+func emptyTree(a ABB) {
 	a = nil
-	return a
 }
 
-func insert_r(a ABB, key tKey) ABB{
+func insert_r(a ABB, key tKey){
 	if a == nil{
-		a = createNodeA()
+		createNodeA(a)
+		fmt.Printf(a)
 		a.key = key
 		a.left = nil
 		a.right = nil
@@ -39,11 +38,10 @@ func insert_r(a ABB, key tKey) ABB{
 	}else {
 		insert_r(a.right,key)
 	}
-	return a
 }
 
-func insertKey(a ABB , key tKey) ABB{
-	return insert_r(a,key)
+func insertKey(a ABB , key tKey){
+	insert_r(a,key)
 }
 
 func leftSon(a ABB) ABB{
@@ -62,6 +60,26 @@ func isEmptyTree(a ABB) bool{
 	return a == nil
 }
 
-func main() {
-	fmt.Printf("Hola")
+func preorderWithBracket(a ABB) {
+	fmt.Printf("(")
+	if ! isEmptyTree(a){
+		if ! isEmptyTree(leftSon(a)) || isEmptyTree(rightSon(a)){
+			fmt.Printf(" ",key(a)," ")
+			preorderWithBracket(leftSon(a))
+			fmt.Printf(" ")
+			preorderWithBracket(rightSon(a))
+		} else {
+			fmt.Printf("  %d%s",key(a)," ")
+		}	
+	}
+	fmt.Printf(")")
 }
+
+func main() {
+	var abb ABB
+	emptyTree(abb)
+	insertKey(abb,4)
+	fmt.Printf("AAAA ", tost(abb))
+	preorderWithBracket(abb)
+}
+
