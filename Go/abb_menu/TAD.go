@@ -15,31 +15,31 @@ func error(s string){
 	fmt.Printf(s)
 }
 
-func createNodeA(a ABB){
-	a = new(tNodeA)
+func createNodeA(a *ABB){
+	*a = new(tNodeA)
 	if a == nil {
 		error("  *** abb.createNodeA : No memory\n")
 	}
 }
 
-func emptyTree(a ABB) {
-	a = nil
+func emptyTree(a *ABB) {
+	*a = nil
 }
 
-func insert_r(a ABB, key tKey){
-	if a == nil{
+func insert_r(a *ABB, key tKey){
+	if *a == nil{
 		createNodeA(a)
-		a.key = key
-		a.left = nil
-		a.right = nil
-	}else if key < a.key{
-		insert_r(a.left,key)
-	}else {
-		insert_r(a.right,key)
+		(*a).key = key
+		(*a).left = nil
+		(*a).right = nil
+	}else if key < (*a).key{
+		insert_r(&(*a).left,key)
+	}else if key > (*a).key{
+		insert_r(&(*a).right,key)
 	}
 }
 
-func insertKey(a ABB , key tKey){
+func insertKey(a *ABB , key tKey){
 	insert_r(a,key)
 }
 
