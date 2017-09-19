@@ -14,7 +14,7 @@ def preorderWithBracket(abb):
 			print(' ',key(abb),' ', end="")
 	print(')', end="")
 		
-if choice==1:
+if choice==0:
 	tree = emptyTree(None)
 	tree = insertKey(tree,4)
 	tree = insertKey(tree,4)

@@ -34,18 +34,23 @@ def menu():
 				number = int(input("\nInsert a number: "))
 				abb = insertKey(abb,number)
 				print('\n-------------------------------------------')
+			elif choice == 2 :
+				print('-------------------------------------------')
+				number = int(input("\nInsert a number: "))
+				abb = eraseKey(abb,number)
+				print('\n-------------------------------------------')
 			elif choice == 3 :
 				print('-------------------------------------------')
 				preorderWithBracket(abb)
 				number = int(input("\nInsert a number that you want to search: "))
-				print('Search',number,'...',searchKey(abb,number))
+				print('Search',number,'...',key(searchKey(abb,number)))
 				print('\n-------------------------------------------')
 			elif choice == 4 :
 				print('-------------------------------------------')
 				preorderWithBracket(abb)
 				print('\n-------------------------------------------')
 			else :
-				print("Your choice is not correct, try again.")
+				print("The option is not in the menu, try again.")
 				print('-------------------------------------------\n')
 		except:
 			print('-------------------------------------------')
