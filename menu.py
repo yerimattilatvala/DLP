@@ -7,7 +7,7 @@ def menu():
 	print('*******************************************')
 	print('\n-------------------------------------------')
 	exit =  False
-	abb = Node()
+	abb = emptyTree(None)
 
 	while exit == False:
 		choice = 0
@@ -32,7 +32,7 @@ def menu():
 			elif choice == 1 :
 				print('-------------------------------------------')
 				number = int(input("\nInsert a number: "))
-				insertKey(abb,number)
+				abb = insertKey(abb,number)
 				print('\n-------------------------------------------')
 			elif choice == 3 :
 				print('-------------------------------------------')
