@@ -29,7 +29,6 @@ func emptyTree(a ABB) {
 func insert_r(a ABB, key tKey){
 	if a == nil{
 		createNodeA(a)
-		fmt.Printf(a)
 		a.key = key
 		a.left = nil
 		a.right = nil
@@ -79,7 +78,6 @@ func main() {
 	var abb ABB
 	emptyTree(abb)
 	insertKey(abb,4)
-	fmt.Printf("AAAA ", tost(abb))
 	preorderWithBracket(abb)
 }
 
