@@ -59,25 +59,3 @@ func isEmptyTree(a ABB) bool{
 	return a == nil
 }
 
-func preorderWithBracket(a ABB) {
-	fmt.Printf("(")
-	if ! isEmptyTree(a){
-		if ! isEmptyTree(leftSon(a)) || isEmptyTree(rightSon(a)){
-			fmt.Printf(" ",key(a)," ")
-			preorderWithBracket(leftSon(a))
-			fmt.Printf(" ")
-			preorderWithBracket(rightSon(a))
-		} else {
-			fmt.Printf("  %d%s",key(a)," ")
-		}	
-	}
-	fmt.Printf(")")
-}
-
-func main() {
-	var abb ABB
-	emptyTree(abb)
-	insertKey(abb,4)
-	preorderWithBracket(abb)
-}
-
