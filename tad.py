@@ -1,70 +1,59 @@
 class Node:
-	def __init__(abb):
-		abb.key = None
-		abb.left = None
-		abb.right = None
+	def __init__(self, key):
+		self.key = key
+		self.left = None
+		self.right = None
 
 #------------------------Node Creation-----------------------------#
-def createNode():
-		return Node()
+def createNode(key):
+	return Node(key)
 	
 #------------------------Empty Tree-----------------------------#
 def emptyTree(abb):
-	abb.key = None
-	abb.left = None
-	abb.right = None
+	return None
 
 #------------------------ Recursive Insert----------------------#
 def insert_r(abb,key):
-	if abb == None:
-		newnode = createNode()
-		newnode.key = key
-		abb = newnode
-	elif abb.key == None:
-		abb.key = key
+	if abb is None:
+		return createNode(key)
 	else:
 		if key < abb.key:
-			if abb.left == None:
-				abb.left = createNode()
-			insert_r(abb.left,key)
+			abb.left = insert_r(abb.left,key)
 		elif key > abb.key:
-			if abb.right == None:
-				abb.right = createNode()
-			insert_r(abb.right,key)
+			abb.right = insert_r(abb.right,key)
+	return abb
+	
 			
 #------------------------ Iterative Insert----------------------#
 def insert_i(abb,key):
-	new_node = createNode()
-	new_node.key = key
-	if abb.key == None:
-		abb.key = key			
+	new_node = createNode(key)
+	
+	if abb is None:
+		return new_node			
 	else :
 		son = abb
 		father = None
-		while son.key != None and son.key != key:
+		while son is not None and son.key != key:
 			father = son
 			if key < son.key :
-				if son.left == None:
-					son.left = createNode()
 				son = son.left
 			else :
-				if son.right == None:
-					son.right = createNode()
 				son = son.right
 				
-		if son.key == None :
+		if son is None :
 			if key < father.key :
 				father.left = new_node
 			else :
 				father.right = new_node
+		return abb
 		
 #------------------------Insert key----------------------#	
 def	insertKey(abb,key):
-	insert_i(abb,key)
+	return insert_r(abb,key)
 		
 #------------------------ Recursive Search----------------------#
 def search_r(abb,key):
-	if abb == None or abb.key == None:
+	if abb is None:
 		return None
 	elif abb.key == key:
 		return abb
@@ -76,7 +65,7 @@ def search_r(abb,key):
 #------------------------ Iterative Search----------------------#
 def search_i(abb,key):
 	node = abb
-	while node != None and node.key != key:
+	while node is not None and node.key != key:
 		if key < node.key:
 			node = node.left
 		else:
@@ -85,7 +74,7 @@ def search_i(abb,key):
 
 #------------------------Search key----------------------#	
 def	searchKey(abb,key):
-	return search_r(abb,key)	
+	return search_i(abb,key)	
 
 #------------------------Left Son----------------------#	
 def leftSon(abb):
@@ -101,53 +90,55 @@ def key(abb):
 		
 #------------------------Left Son----------------------#	
 def isEmptyTree(abb):
-	return abb == None or abb.key == None
+	return abb is None
 		
 #------------------------ Recursive Erase----------------------#
 def erase_r(abb,key):
-	aux = createNode()
+	aux = None
 
 	def sup2(tree):
-		if tree.right != None:
-			sup2(tree.right)
+		if tree.right is not None:
+			tree.right = sup2(tree.right)
 		else:
 			aux.key = tree.key
-			aux = tree
-			tree = tree.left
+			#aux = tree
+			return tree.left
+		return aux
 
-	if abb != None and abb.key != None:
+	if abb is not None:
 		if key < abb.key:
-			erase_r(abb.left,key)
+			abb.left = erase_r(abb.left,key)
 		elif key > abb.key:
-			erase_r(abb.right,key)
+			abb.right = erase_r(abb.right,key)
 		else:
 			aux = abb
-			if abb.left == None:
+			if abb.left is None:
 				abb = abb.right
-			elif abb.right == None:
+			elif abb.right is None:
 				abb = abb.left
 			else:
-				sup2(abb.left)
+				abb = sup2(abb.left)
 			aux = None
+	return abb
 			
 #------------------------ Iterative Erase----------------------#
 def erase_i(abb,key):
-	sons_num
-	sup
-	f_sup
-	not_empty_son
-	son_left_max
+	sons_num = None
+	sup = None
+	f_sup = None
+	not_empty_son = None
+	son_left_max = None
 		
 	f_sup = None
 	sup = abb
-	while sup != None and sup.key != key:
+	while sup is not None and sup.key != key:
 		f_sup = sup
 		if key < sup.key:
 			sup = sup.left
 		else:
 			sup = sup.right
 				
-	if sup != None:
+	if sup is not None:
 		sons_num = 0
 		if sup.left != None:
 			sons_num = sons_num + 1
@@ -189,9 +180,10 @@ def erase_i(abb,key):
 				f_sup.right = son_left_max.left
 				
 			sup = son_left_max
-				
+
 		sup = None	
+	return abb
 		
 #------------------------ Erase Key----------------------#				
 def eraseKey(abb,key):
-	erase_r(abb,key)
+	return erase_i(abb,key)
