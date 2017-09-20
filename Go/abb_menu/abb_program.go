@@ -20,6 +20,7 @@ func preorderWithBracket(a ABB) {
 
 func main() {
 	var abb ABB
+<<<<<<< Updated upstream:Go/abb_menu/abb_program.go
 	abb = &tNodeA{4,nil,nil}
 	emptyTree(&abb)
 
@@ -33,4 +34,16 @@ func main() {
 	insertKey(&abb,7)
 	preorderWithBracket(abb)
 	fmt.Printf("\n")
+=======
+	emptyTree(abb)
+	if abb == nil{
+		fmt.Printf("NULO")
+	}
+	insertKey(abb,5)
+	if abb == nil{
+		fmt.Printf("NULO")
+	}else{
+		preorderWithBracket(abb)
+	}
+>>>>>>> Stashed changes:Go/src/abb_menu/abb_program.go
 }
