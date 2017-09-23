@@ -45,6 +45,16 @@ let rec insert_r abb data =  match abb with
             else
                 rightSon father = newNode*)
 
+
+let rec search_r abb data = match abb with
+    Empty -> Empty
+    |Node(k,left,right) ->
+        if data < k then search_r left data
+        else if data > k then search_r right data
+        else abb;;            
+
+
+
 let isEmptyTree abb = match abb with
     Empty -> true
     |Node(_,_,_) -> false;;
