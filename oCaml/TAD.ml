@@ -15,25 +15,29 @@ let rec insert_r abb data =  match abb with
         else if data>key then Node(key,left,insert_r right data)
         else abb;;
 
-(*let insertar_i abb data = 
+let insert_i abb data = 
     let newNode = Node(data,Empty,Empty) in
-    match abb with
-        Empty -> newNode
-        |Node(key,leftSon,rightSon)-> newNode;;
-        let father = emptyTree;
-        let son = abb;
-        while() son != Empty) && ((key son) != data)  do
-            father = son
-            if data < (key son) then
-                son := leftSon(son)
+    if abb = Empty then
+        newNode
+    else begin
+        let father = ref Empty in
+        let son = ref abb in
+        while !son != Empty && (key !son) != data do
+            father := !son;
+            if data < (key !son) then
+                son := (leftSon !son)
             else
-                son = rightSon(son)
+                son:=(rightSon !son)
         done;
-        if son = Empty then
-            if data < (key son) then
-                son = leftSon(son)
-            else
-                rightSon father = newNode*)
+        if !son = Empty then
+            if data < key !father then 
+                (*padre^.izdo := nuevo*)
+            else 
+                (*padre^.dcho := nuevo;*)
+        else
+            abb
+end;;
+
 
 let insertKey abb data = insert_r abb data;;
 
@@ -60,4 +64,4 @@ let rightSon abb = match abb with
     Empty -> Empty
     |Node(_,_,right) -> right;;
 
-   
+    
