@@ -18,7 +18,8 @@ let rec preorderWithBracket abb =
           print_int (key abb);
           print_string " ";
           print_string ")";
-      end;;
+      end
+    else print_string ")";;
 
 
 let abb = emptyTree;;
