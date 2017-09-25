@@ -1,25 +1,24 @@
 
 
 let rec preorderWithBracket abb = 
-  print_string "(";
-  if not (isEmptyTree abb ) then
-      if not (isEmptyTree (leftSon abb)) || not (isEmptyTree (rightSon abb)) then
-          begin
-              print_string " ";
-              print_int (key abb);
-              print_string " ";
-              preorderWithBracket (leftSon abb);
-              print_string " ";
-              preorderWithBracket (rightSon abb);
-              print_string ")";
-          end
-      else begin
-          print_string " ";
-          print_int (key abb);
-          print_string " ";
-          print_string ")";
-      end
-    else print_string ")";;
+    print_string "(";
+    if not (isEmptyTree abb ) then
+        if not (isEmptyTree (leftSon abb)) || not (isEmptyTree (rightSon abb)) then
+            begin
+                print_string " ";
+                print_int (key abb);
+                print_string " ";
+                preorderWithBracket (leftSon abb);
+                print_string " ";
+                preorderWithBracket (rightSon abb);
+            end
+        else begin
+            print_string " ";
+            print_int (key abb);
+            print_string " ";
+  
+        end;
+    print_string ")";;
 
 
 let abb = emptyTree;;
