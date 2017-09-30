@@ -1,66 +1,64 @@
-evaluate(new File("./TAD.groovy"))
 
 def preorderWithBracket(abb){
+    tad = new TAD()
     print '('
-	if (!isEmptyTree(abb)){
-		if ((!isEmptyTree(leftSon(abb))) || (!isEmptyTree(rightSon(abb)))){
-			print ' '+key(abb)+ ' '
-			preorderWithBracket(leftSon(abb))
+	if (!tad.isEmptyTree(abb)){
+		if ((!tad.isEmptyTree(tad.leftSon(abb))) || (!tad.isEmptyTree(tad.rightSon(abb)))){
+			print ' '+tad.key(abb)+ ' '
+			preorderWithBracket(tad.leftSon(abb))
 			print ' '
-			preorderWithBracket(rightSon(abb))
+			preorderWithBracket(tad.rightSon(abb))
         }
 		else{
-			print ' '+key(abb)+ ' '
+			print ' '+tad.key(abb)+ ' '
         }
     }
 	print ')'
 }
 
-def test(see){
-    if (see == 1){
-    def tree = emptyTree(null)
-    tree = insertKey(tree,4)
-    insertKey(tree,4)
-    insertKey(tree,2)
-    insertKey(tree,6)
-    insertKey(tree,1)
-    insertKey(tree,3)
-    insertKey(tree,5)
-    insertKey(tree,7)
+def test(){
+    tad = new TAD()
+    def tree = tad.emptyTree(null)
+    tree = tad.insertKey(tree,4)
+    tree = tad.insertKey(tree,4)
+    tree = tad.insertKey(tree,2)
+    tree = tad.insertKey(tree,6)
+    tree = tad.insertKey(tree,1)
+    tree = tad.insertKey(tree,3)
+    tree = tad.insertKey(tree,5)
+    tree = tad.insertKey(tree,7)
 
     preorderWithBracket(tree)
     print '\n'
 
-    println 'search 1...'+ key(searchKey(tree,1))
-    println 'search 2...'+key(searchKey(tree,2))
-    println 'search 3...'+key(searchKey(tree,3))
-    println 'search 4...'+key(searchKey(tree,4))
-    println 'search 5...'+key(searchKey(tree,5))
-    println 'search 6...'+key(searchKey(tree,6))
-    println 'search 7...'+key(searchKey(tree,7))
+    println 'search 1...'+tad.key(tad.searchKey(tree,1))
+    println 'search 2...'+tad.key(tad.searchKey(tree,2))
+    println 'search 3...'+tad.key(tad.searchKey(tree,3))
+    println 'search 4...'+tad.key(tad.searchKey(tree,4))
+    println 'search 5...'+tad.key(tad.searchKey(tree,5))
+    println 'search 6...'+tad.key(tad.searchKey(tree,6))
+    println 'search 7...'+tad.key(tad.searchKey(tree,7))
 
     print'remove 5...'
-        eraseKey(tree,5)
-        preorderWithBracket(tree)
-        print '\n'
+    tad.eraseKey(tree,5)
+    preorderWithBracket(tree)
+    print '\n'
 
-        print 'remove 6...'
-        eraseKey(tree,6)
-        preorderWithBracket(tree)
-        print '\n'
+    print 'remove 6...'
+    tad.eraseKey(tree,6)
+    preorderWithBracket(tree)
+    print '\n'
 
-        print 'remove 4...'
-        eraseKey(tree,4)
-        preorderWithBracket(tree)
-        print '\n'
+    print 'remove 4...'
+    tad.eraseKey(tree,4)
+    preorderWithBracket(tree)
+    print '\n'
 
-        print 'remove 2...'
-        eraseKey(tree,2)
-        preorderWithBracket(tree)
-        print '\n'
-    }
+    print 'remove 2...'
+    tad.eraseKey(tree,2)
+    preorderWithBracket(tree)
+    print '\n'
+
 }
-
-test(1)
-
+test()
 

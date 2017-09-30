@@ -1,4 +1,11 @@
-
+/*
+---Como compilar:
+--- groovyc ./TAD.groovy
+--- groovyc ./abb_program.groovy
+--- groovy ./menu.groovy
+*/
+tad = new TAD()
+test = new abb_program()
 
 def menu(){
 
@@ -35,9 +42,16 @@ def menu(){
                 println '-------------------------------------------'
                 break
             case 1://insert
+                break
             case 2://erase
+                break
             case 3://search
+                break
             case 4://preorderWithBracket
+                break
+            case 5://test
+                test.test()
+                break
         }
 		
     }
