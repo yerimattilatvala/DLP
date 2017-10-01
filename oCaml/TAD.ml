@@ -8,6 +8,21 @@ let error s =
 
 let emptyTree = Empty;;
 
+let isEmptyTree abb = match abb with
+Empty -> true
+|Node(_,_,_) -> false;;
+
+let key abb = match abb with
+|Node(key,_,_) -> key ;;
+
+let leftSon abb = match abb with
+Empty -> ref Empty
+|Node(_,left,_) -> left;;
+
+let rightSon abb = match abb with
+Empty -> ref Empty
+|Node(_,_,right) -> right;;
+
 let rec insert_r abb data =  match !abb with
     Empty -> abb := Node(data,ref Empty,ref Empty)
     |Node(key,left,right) -> 
@@ -39,6 +54,7 @@ let insert_i abb data =
             );;
 
 
+let insertKey abb data = insert_r abb data;;
 
 let rec search_r abb data = match !abb with
     Empty -> Empty
@@ -51,28 +67,13 @@ let search_i abb data =
     let node = ref !abb in
     while !node != Empty && (key !node) != data do
         if data < (key !node) then
-            nodelet insertKey abb data = insert_r abb data;; := !(leftSon !node)
+            node := !(leftSon !node)
         else
             node := !(rightSon !node)
     done;
     !node;;
 
 let searchKey abb data = search_r abb data;;
-
-let isEmptyTree abb = match abb with
-    Empty -> true
-    |Node(_,_,_) -> false;;
-
-let key abb = match abb with
-    |Node(key,_,_) -> key ;;
-
-let leftSon abb = match abb with
-    Empty -> ref Empty
-    |Node(_,left,_) -> left;;
-
-let rightSon abb = match abb with
-    Empty -> ref Empty
-    |Node(_,_,right) -> right;;
 
 let rec erase_r abb data = 
     let aux = ref abb in
