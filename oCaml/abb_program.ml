@@ -1,3 +1,5 @@
+open TAD
+
 let rec preorderWithBracket abb = 
     print_string "(";
     if not (isEmptyTree abb ) then

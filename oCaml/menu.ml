@@ -1,7 +1,7 @@
-#use "TAD.ml" ;;
-#use "abb_program.ml";;
+(*ocamlopt -0 menu TAD.ml abb_program.ml menu.ml*)
 
-
+open TAD
+open Abb_program
 
 let menu  exit= 
   print_string("\n*******************************************");
@@ -63,3 +63,6 @@ let menu  exit=
     end
     else print_string("\n-------------------------------------------\n");
   in submenu abb exit;;
+
+  menu(false);;
+
