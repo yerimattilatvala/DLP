@@ -19,8 +19,8 @@ function menu()
 		print("per screen.")
 		print("\nPress 4 if you want to display the tree by")
 		print("screen in parenthesized format.")
-        print("\nPress 5 if you want to run the default test")
-		print("\nPress 0 if you want to exit the menu")
+        print("\nPress 5 if you want to run the default test.")
+		print("\nPress 0 if you want to exit the menu.")
 
 		print('-------------------------------------------')
         print("\nWhat would you like to do?\n")
@@ -47,7 +47,7 @@ function menu()
             end
 		elseif choice == 2 then
 			print('-------------------------------------------')
-			print("\nInsert a number: ")
+			print("\nInsert a number that you want to the delete: ")
             number = tonumber(io.read())
             if number ~= nil then
 			    abb = eraseKey(abb,number)

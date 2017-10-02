@@ -1,7 +1,5 @@
-from tad import *
+from TAD import *
 
-
-choice = 1
 def preorderWithBracket(abb):
 	print('(', end="")
 	if not isEmptyTree(abb):
@@ -14,7 +12,7 @@ def preorderWithBracket(abb):
 			print(' ',key(abb),' ', end="")
 	print(')', end="")
 		
-if choice==0:
+def test():
 	tree = emptyTree(None)
 	tree = insertKey(tree,4)
 	tree = insertKey(tree,4)

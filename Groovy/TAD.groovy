@@ -1,4 +1,3 @@
-
 class Node{
     def root
     def left

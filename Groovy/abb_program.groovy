@@ -1,4 +1,3 @@
-
 def preorderWithBracket(abb){
     tad = new TAD()
     print '('
@@ -60,5 +59,4 @@ def test(){
     print '\n'
 
 }
-test()
 

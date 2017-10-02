@@ -1,0 +1,4 @@
+To compile and run the menu:
+    groovyc TAD.groovy
+    groovyc abb_program.groovy
+    groovy menu.groovy
