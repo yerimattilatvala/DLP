@@ -56,17 +56,17 @@ fun test() {
 	println("")
 
 	print("remove 6...")
-	eraseKey(tree,6)
+	tree = eraseKey(tree,6)
 	preorderWithBracket(tree)
 	println("")
 
 	print("remove 4...")
-	eraseKey(tree,4)
+	tree = eraseKey(tree,4)
 	preorderWithBracket(tree)
 	println("")
 
 	print("remove 2...")
-	eraseKey(tree,2)
+	tree = eraseKey(tree,2)
 	preorderWithBracket(tree)
 	println("")
 }
