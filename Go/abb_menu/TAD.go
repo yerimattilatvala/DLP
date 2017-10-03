@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 type tKey int
 
 type tNodeA struct{
@@ -11,15 +9,8 @@ type tNodeA struct{
 
 type ABB *tNodeA
 
-func error(s string){
-	fmt.Printf(s)
-}
-
 func createNodeA(a *ABB){
 	*a = new(tNodeA)
-	if a == nil {
-		error("  *** abb.createNodeA : No memory\n")
-	}
 }
 
 func emptyTree(a *ABB) {

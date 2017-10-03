@@ -4,16 +4,9 @@ class Node:
 		self.left = None
 		self.right = None
 
-def error(s):
-	print(s)
-	exit(1)
-
 #------------------------Node Creation-----------------------------#
 def createNode(key):
-	aux = Node(key)
-	if aux is None:
-		error('*** abb.createNode: full memory')
-	return aux
+	return Node(key)
 	
 #------------------------Empty Tree-----------------------------#
 def emptyTree(abb):
