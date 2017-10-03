@@ -59,7 +59,7 @@ def menu():
 				print('-------------------------------------------\n')
 		except:
 			print('-------------------------------------------')
-			print("Error, not enter a letter, try again.")
+			print("Error,do not enter a letter, try again.")
 			print('-------------------------------------------\n')
 		
 

@@ -15,13 +15,13 @@ def preorderWithBracket(abb):
 def test():
 	tree = emptyTree(None)
 	tree = insertKey(tree,4)
-	tree = insertKey(tree,4)
-	tree = insertKey(tree,2)
-	tree = insertKey(tree,6)
-	tree = insertKey(tree,1)
-	tree = insertKey(tree,3)
-	tree = insertKey(tree,5)
-	tree = insertKey(tree,7)
+	insertKey(tree,4)
+	insertKey(tree,2)
+	insertKey(tree,6)
+	insertKey(tree,1)
+	insertKey(tree,3)
+	insertKey(tree,5)
+	insertKey(tree,7)
 
 	preorderWithBracket(tree)
 	print()
@@ -35,7 +35,7 @@ def test():
 	print('search 7...',key(searchKey(tree,7)))
 
 	print('remove 5...')
-	tree = eraseKey(tree,5)
+	eraseKey(tree,5)
 	preorderWithBracket(tree)
 	print()
 
@@ -53,3 +53,4 @@ def test():
 	eraseKey(tree,2)
 	preorderWithBracket(tree)
 	print()
+test()

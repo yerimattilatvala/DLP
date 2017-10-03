@@ -1,3 +1,2 @@
 Compile all modules : go build
 Execute menu: ./abb_menu
-Compile and run a module : groovy name_module.groovy

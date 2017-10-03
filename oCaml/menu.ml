@@ -24,50 +24,59 @@ let menu  exit=
       print_string("\nPress 0 if you want to exit the menu\n");
       print_string("\n-------------------------------------------\n");
       print_string("\nWhat would you like to do?\n");
-      let choice = read_int () in
-      if choice == 1 then begin
-        print_string("\nInsert a number: ");
-        let number = read_int () in
-        insertKey abb1 number; 
-        print_string "\n";
-        submenu abb1 false
+      try
+        let choice = read_int () in
+        if choice == 1 then begin
+          print_string("\nInsert a number: ");
+          let number = read_int () in
+          insertKey abb1 number; 
+          print_string "\n";
+          submenu abb1 false
+        end
+        else if choice == 2 then begin
+          print_string("\nInsert a number that you want to the delete: ");
+          let number = read_int () in
+          eraseKey abb1 number;
+          print_string "\n";
+          submenu abb1 false
+        end
+        else if choice == 3 then begin
+          preorderWithBracket !abb1;
+          print_string "\n";
+          print_string("\nInsert a number that you want to search: ");
+          let number = read_int () in
+          let root = key(searchKey abb1 number) in
+          print_string "\n This is the number : ";
+          print_int root;
+          print_string "\n";
+          submenu abb1 false
+        end
+        else if choice == 4 then begin
+          preorderWithBracket !abb1;
+          print_string "\n";
+          submenu abb1 false
+        end
+        else if choice == 5 then begin
+          test 1;
+          print_string "\n";
+          submenu abb1 false
+        end
+        else if choice = 0 then
+          submenu abb1 true
+        else begin
+          print_string "\nYour choice is not correct, try again.\n ";
+          submenu abb1 false
+        end
+        with 
+          Failure ("int_of_string")->
+            print_string("\nError,do not enter a letter, try again.\n");
+            submenu abb1 false
+          |Match_failure("TAD.ml", 15, 14) ->
+            print_string("Error,do not enter a letter or search for a number that contains the tree, try again. \n");
+            submenu abb1 false
+          
       end
-      else if choice == 2 then begin
-        print_string("\nInsert a number that you want to the delete: ");
-        let number = read_int () in
-        eraseKey abb1 number;
-        print_string "\n";
-        submenu abb1 false
-      end
-      else if choice == 3 then begin
-        preorderWithBracket !abb1;
-        print_string "\n";
-        print_string("\nInsert a number that you want to search: ");
-        let number = read_int () in
-        let root = key(searchKey abb1 number) in
-        print_string "\n This is the number : ";
-        print_int root;
-        print_string "\n";
-        submenu abb1 false
-      end
-      else if choice == 4 then begin
-        preorderWithBracket !abb1;
-        print_string "\n";
-        submenu abb1 false
-      end
-      else if choice == 5 then begin
-        test 1;
-        print_string "\n";
-        submenu abb1 false
-      end
-      else if choice = 0 then
-        submenu abb1 true
-      else begin
-        print_string "\nYour choice is not correct, try again.\n ";
-        submenu abb1 false
-      end
-    end
-    else print_string("\n-------------------------------------------\n");
+      else print_string("\n-------------------------------------------\n");
   in submenu abb exit;;
 
   menu(false);;

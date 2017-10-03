@@ -69,7 +69,7 @@ def menu(){
                     number = number.toInteger() 
                     println 'search '+number+'...'+ tad.key(tad.searchKey(abb,number))
                 }catch (Exception e) {
-                    print("Error, not enter a letter or search for a number that contains the tree, try again. \n") //Catch error
+                    print("Error,do not enter a letter or search for a number that contains the tree, try again. \n") //Catch error
                 }
                 println '-------------------------------------------'
                 break
