@@ -28,66 +28,55 @@ def menu(){
         def choice =System.console().readLine 'What is your choice?\n'
         try{
             choice = choice.toInteger() 
-        }catch (Exception e) {
-            print("Error, not enter a letter, try again. \n") //Catch error
-        }
-        println '-------------------------------------------'
+            println '-------------------------------------------'
 
-        switch(choice) {
-            case 0:
-                exit =1
-                println '-------------------------------------------'
-                break
-            case 1:
-                println '-------------------------------------------'
-                number = System.console().readLine'Insert a number: '
-                try{
+            switch(choice) {
+                case 0:
+                    exit =1
+                    println '-------------------------------------------'
+                    break
+                case 1:
+                    println '-------------------------------------------'
+                    number = System.console().readLine'Insert a number: '
                     number = number.toInteger() 
                     abb = tad.insertKey(abb,number)
-                }catch (Exception e) {
-                    print("Error, not enter a letter, try again. \n") //Catch error
-                }
-                println '-------------------------------------------'
-                break
-            case 2:
-                println '-------------------------------------------'
-                number = System.console().readLine'Insert a number that you want to the delete: '
-                try{
+                    println '-------------------------------------------'
+                    break
+                case 2:
+                    println '-------------------------------------------'
+                    number = System.console().readLine'Insert a number that you want to the delete: '
                     number = number.toInteger() 
                     abb = tad.eraseKey(abb,number)
-                }catch (Exception e) {
-                    print("Error, not enter a letter, try again. \n") //Catch error
-                }
-                println '-------------------------------------------'
-                break
-            case 3:
-                println '-------------------------------------------'
-                test.preorderWithBracket(abb)
-                print '\n'
-                number = System.console().readLine'Insert a number that you want to search:  '
-                try{
+                    println '-------------------------------------------'
+                    break
+                case 3:
+                    println '-------------------------------------------'
+                    test.preorderWithBracket(abb)
+                    print '\n'
+                    number = System.console().readLine'Insert a number that you want to search:  '
                     number = number.toInteger() 
                     println 'search '+number+'...'+ tad.key(tad.searchKey(abb,number))
-                }catch (Exception e) {
-                    print("Error,do not enter a letter or search for a number that contains the tree, try again. \n") //Catch error
-                }
-                println '-------------------------------------------'
-                break
-            case 4:
-                println '-------------------------------------------'
-                test.preorderWithBracket(abb)
-                println '\n-------------------------------------------'
-                break
-            case 5:
-                println '-------------------------------------------'
-                test.test()
-                println '\n-------------------------------------------'
-                break
-            default :
-                println '-------------------------------------------'
-                println 'Your choice is not correct, try again.'
-                println '-------------------------------------------'
-                break
+                    println '-------------------------------------------'
+                    break
+                case 4:
+                    println '-------------------------------------------'
+                    test.preorderWithBracket(abb)
+                    println '\n-------------------------------------------'
+                    break
+                case 5:
+                    println '-------------------------------------------'
+                    test.test()
+                    println '\n-------------------------------------------'
+                    break
+                default :
+                    println '-------------------------------------------'
+                    println 'Your choice is not correct, try again.'
+                    println '-------------------------------------------'
+                    break
+            }
+        }catch (Exception e) {
+            println("\nError,do not enter a letter or search for a number that contains the tree, try again.") //Catch error
+            println ("--------------------------------------------")
         }
         
     }
