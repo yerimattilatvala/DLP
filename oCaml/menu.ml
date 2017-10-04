@@ -20,7 +20,7 @@ let menu  exit=
       print_string("per screen.");
       print_string("\nPress 4 if you want to display the tree by");
       print_string("screen in parenthesized format.");
-      print_string("Press 5 if you want to run the default test.");
+      print_string("\nPress 5 if you want to run the default test.\n");
       print_string("\nPress 0 if you want to exit the menu\n");
       print_string("\n-------------------------------------------\n");
       print_string("\nWhat would you like to do?\n");
@@ -72,7 +72,7 @@ let menu  exit=
             print_string("\nError,do not enter a letter, try again.\n");
             submenu abb1 false
           |Match_failure("TAD.ml", 15, 14) ->
-            print_string("Error,do not enter a letter or search for a number that contains the tree, try again. \n");
+            print_string("Error,do not search for a number that contains the tree, try again. \n");
             submenu abb1 false
           
       end

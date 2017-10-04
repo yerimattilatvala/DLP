@@ -1,0 +1,2 @@
+Compile to native : ocamlopt -o menu TAD.ml abb_program.ml menu.ml
+Run : ./menu
