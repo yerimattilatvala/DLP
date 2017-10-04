@@ -62,8 +62,14 @@ function menu()
 			print("\nInsert a number that you want to search: ")
             number = tonumber(io.read())
             if number ~= nil then
-			    print('Search',number,'...',key(searchKey(abb,number)))
-			    print('\n-------------------------------------------')
+				found = searchKey(abb,number)
+				if found ~= nil then
+					print('Search',number,'...',key(found))
+					print('\n-------------------------------------------')
+				else
+					print('\nError, do not search for a number that is not in the tree.')
+					print('\n-------------------------------------------\n')
+				end
             else 
 			    print("Your choice is not a number, try again.")
 			    print('-------------------------------------------\n')
