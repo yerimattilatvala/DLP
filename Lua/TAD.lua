@@ -170,7 +170,7 @@ function erase_i(abb,key)
 				f_sup.right = None
 			end
 
-		elseif sons_num == 1 then		-- when the node to erase hve one son
+		elseif sons_num == 1 then		-- when the node to erase have one son
 			if sup.left == None then		-- check which is the not empty son
 				not_empty_son = sup.right
 			else
