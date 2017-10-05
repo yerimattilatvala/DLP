@@ -1,4 +1,13 @@
 
+-- Autor1: Yeray Méndez Romero
+-- Login1: yeray.mendez
+-- Email1: yeray.mendez@udc.es
+-- Autor2: Daniel Rivera López
+-- Login2: d.rivera1
+-- Email2: d.rivera1@udc.es
+
+
+--create a new node with the given key
 function createNode (key)
     local aux = {}
     if aux == nil then
@@ -8,10 +17,12 @@ function createNode (key)
     return aux
 end 
 
+--return an empty tree
 function emptyTree (abb)
     return nil
 end
 
+--insert the key into the given tree recursively
 function insert_r (abb,key)
     if abb == nil then -- if abb is an empty tree we only need to put a new Node inside
 		return createNode(key)
@@ -25,6 +36,7 @@ function insert_r (abb,key)
 	return abb
 end
 
+--insert the key into the given tree iteratively
 function insert_i (abb,key)
     local new_node = createNode(key) -- creation of a node containing the key to insert
 	
@@ -53,10 +65,12 @@ function insert_i (abb,key)
 	end
 end
 
+--insert the key into the given tree
 function insertKey (abb,key)
 	return insert_r(abb,key)
 end
 
+--search a given value on the given tree recursively and returns the node containing it or null
 function search_r(abb,key)
 	if abb == nil then	-- if the tree is empty the key can not be in it
 		return None
@@ -69,6 +83,7 @@ function search_r(abb,key)
 	end
 end
 
+--search a given value on the given tree iteratively and returns the node containing it or null
 function search_i(abb,key)
 	local node = abb	-- creation of the variable 'node' to iterate over the nodes of abb
 	while node ~= nil and node.key ~= key do
@@ -81,26 +96,32 @@ function search_i(abb,key)
 	return node
 end
 
+--search a given value on the given tree and returns the node containing it or null
 function searchKey(abb,key)
 	return search_i(abb,key)
 end
 
+--return the left son of a given tree
 function leftSon(abb)
 	return abb.left
 end
 
+--return the right son of a given tree
 function rightSon(abb)
 	return abb.right
 end
 
+--return the key of a given tree
 function key(abb)
 	return abb.key
 end
 
+--check if a tree is empty
 function isEmptyTree(abb)
 	return abb == nil
 end
 
+--erase a given value in a given tree recursively
 function erase_r(abb,key)
 	local aux = nil 	-- contains abb when the sup2 function is called
 
@@ -134,6 +155,7 @@ function erase_r(abb,key)
 	return abb
 end
 
+--erase a given value in a given tree iteratively
 function erase_i(abb,key)
 	local sons_num = nil		-- the number of sons of the node to erase
 	local sup = nil				-- node to erase
@@ -208,6 +230,7 @@ function erase_i(abb,key)
 	return abb
 end
 
+--erase a given value in a given tree
 function eraseKey(abb,key)
 	return erase_i(abb,key)
 end

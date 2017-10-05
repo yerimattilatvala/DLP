@@ -54,8 +54,13 @@ def menu():
 				print('-------------------------------------------')
 				preorderWithBracket(abb)
 				number = int(input("\nInsert a number that you want to search: "))
-				print('Search',number,'...',key(searchKey(abb,number)))
-				print('\n-------------------------------------------')
+				try:
+					print('Search',number,'...',key(searchKey(abb,number)))
+					print('\n-------------------------------------------')
+				except:
+					print('-------------------------------------------')
+					print("The value is not on the tree.")
+					print('-------------------------------------------\n')
 			elif choice == 4 :
 				print('-------------------------------------------')
 				preorderWithBracket(abb)

@@ -1,3 +1,12 @@
+
+-- Autor1: Yeray Méndez Romero
+-- Login1: yeray.mendez
+-- Email1: yeray.mendez@udc.es
+-- Autor2: Daniel Rivera López
+-- Login2: d.rivera1
+-- Email2: d.rivera1@udc.es
+
+
 local abbTad = require("TAD")
 local abbTest = require("abb_program")
 
@@ -67,7 +76,7 @@ function menu()
 					print('Search',number,'...',key(found))
 					print('\n-------------------------------------------')
 				else
-					print('\nError, do not search for a number that is not in the tree.')
+					print('\nThe number is not on the tree.')
 					print('\n-------------------------------------------\n')
 				end
             else 

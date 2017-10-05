@@ -88,7 +88,7 @@ func main(){
 				}
 				if searchKey(abb,input2) == nil {
 					fmt.Printf("\n-------------------------------------------\n")
-					fmt.Printf("\nError, do not search for a number that is not in the tree.\n")
+					fmt.Printf("\nThe number is not on the tree.\n")
 					fmt.Printf("\n-------------------------------------------\n")
 					goto RESTART
 				}

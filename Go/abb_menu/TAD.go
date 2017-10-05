@@ -18,14 +18,17 @@ type tNodeA struct{
 
 type ABB *tNodeA
 
+//create a new node with the given key
 func createNodeA(a *ABB){
 	*a = new(tNodeA)
 }
 
+//return an empty tree
 func emptyTree(a *ABB) {
 	*a = nil
 }
 
+//insert the key into the given tree recursively
 func insert_r(a *ABB, key tKey){
 	if *a == nil{		// if abb is an empty tree we only need to put a new Node inside
 		createNodeA(a)
@@ -39,6 +42,7 @@ func insert_r(a *ABB, key tKey){
 	}
 }
 
+//insert the key into the given tree iteratively
 func insert_i(a *ABB, key tKey){
 	var new, father, son ABB	// creation of variables 'son' an 'father' to iterate over the nodes of the tree
 	createNodeA(&new)	//creation of a node containing the key to insert
@@ -68,10 +72,12 @@ func insert_i(a *ABB, key tKey){
 	}
 }
 
+//insert the key into the given tree
 func insertKey(a *ABB , key tKey){
 	insert_i(a,key)
 }
 
+//search a given value on the given tree recursively and returns the node containing it or null
 func search_r(a ABB ,key tKey) ABB{
 	if a == nil{		// if the tree is empty the key can not be in it
 		return nil
@@ -84,6 +90,7 @@ func search_r(a ABB ,key tKey) ABB{
 	}
 }
 
+//search a given value on the given tree iteratively and returns the node containing it or null
 func search_i(a ABB ,key tKey) ABB{
 	var node ABB
 	node = a	// creation of the variable 'node' to iterate over the nodes of abb
@@ -97,26 +104,32 @@ func search_i(a ABB ,key tKey) ABB{
 	return node
 }
 
+//search a given value on the given tree and returns the node containing it or null
 func searchKey(a ABB, key tKey) ABB{
 	return search_i(a,key)
 }
 
+//return the left son of a given tree
 func leftSon(a ABB) ABB{
 	return a.left
 }
 
+//return the right son of a given tree
 func rightSon(a ABB) ABB{
 	return a.right
 }
 
+//return the key of a given tree
 func key(a ABB) tKey{
 	return a.key
 }
 
+//check if a tree is empty
 func isEmptyTree(a ABB) bool{
 	return a == nil
 }
 
+//erase a given value in a given tree recursively
 func erase_r(a *ABB, key tKey){
 	var aux ABB	//contains abb when the sup2 function is called
 	var sup2 func(b *ABB)	//  puts in the key of 'aux' the higher key of the left tree of abb
@@ -149,6 +162,7 @@ func erase_r(a *ABB, key tKey){
 	}
 }
 
+//erase a given value in a given tree iteratively
 func erase_i(a *ABB, key tKey){
 	var numSons int		// the number of sons of the node to erase
 	var sup  ABB		// node to erase
@@ -219,6 +233,7 @@ func erase_i(a *ABB, key tKey){
 
 }
 
+//erase a given value in a given tree
 func eraseKey(a *ABB, key tKey){
 	erase_r(a,key)
 }

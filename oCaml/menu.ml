@@ -80,7 +80,7 @@ let menu  exit=
             print_string("\nError,do not enter a letter, try again.\n");
             submenu abb1 false
           |Match_failure("TAD.ml", 28, 14) ->
-            print_string("Error,do not search for a number that contains the tree, try again. \n");
+            print_string("The number is not on the tree. \n");
             submenu abb1 false
           
       end

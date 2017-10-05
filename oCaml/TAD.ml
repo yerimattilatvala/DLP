@@ -13,27 +13,33 @@ type intabb =
 
 let emptyTree = Empty;;
 
+(*check if a tree is empty*)
 let isEmptyTree abb = match abb with
 Empty -> true
 |Node(_,_,_) -> false;;
 
+(*return the key of a given tree*)
 let key abb = match abb with
 |Node(key,_,_) -> key ;;
 
+(*return the left son of a given tree*)
 let leftSon abb = match abb with
 Empty -> ref Empty
 |Node(_,left,_) -> left;;
 
+(*return the right son of a given tree*)
 let rightSon abb = match abb with
 Empty -> ref Empty
 |Node(_,_,right) -> right;;
 
+(*insert the key into the given tree recursively*)
 let rec insert_r abb data =  match !abb with
     Empty -> abb := Node(data,ref Empty,ref Empty)  (*if abb is an empty tree we only need to put a new Node inside*)
     |Node(key,left,right) -> 
         if data < key then insert_r left data  (* if the key to insert is lower than the one in abb we call the same function with his left tree*)
         else if data>key then insert_r right data;; (*if it is higher we call it with the right one*)
 
+(*insert the key into the given tree iteratively*)
 let insert_i abb data = 
     let newNode = Node(data,ref Empty,ref Empty) in (*creation of a node containing the key to insert*)
     let father = ref (ref emptyTree) in (*creation of variables 'son' an 'father' to iterate over the nodes of the tree*)
@@ -58,8 +64,10 @@ let insert_i abb data =
             ()                                          
             );;                                         (*if 'son' is not null the key is already on the tree so there is nothing to do*)
 
+(*insert the key into the given tree*)
 let insertKey abb data = insert_r abb data;;
 
+(*search a given value on the given tree recursively and returns the node containing it or null*)
 let rec search_r abb data = match !abb with
     Empty -> Empty  (*if the tree is empty the key can not be in it*)
     |Node(k,left,right) ->
@@ -67,6 +75,7 @@ let rec search_r abb data = match !abb with
         else if data > k then search_r right data (*or left son of the current node depending of the key+*)
         else !abb;; (*if the current node has the key we just return it*)
 
+(*search a given value on the given tree iteratively and returns the node containing it or null*)
 let search_i abb data =
     let node = ref !abb in      (*creation of the variable 'node' to iterate over the nodes of abb*)
     while !node != Empty && (key !node) != data do
@@ -77,8 +86,10 @@ let search_i abb data =
     done;
     !node;;
 
+(*search a given value on the given tree and returns the node containing it or null*)
 let searchKey abb data = search_r abb data;;
 
+(*erase a given value in a given tree recursively*)
 let rec erase_r abb data = 
     let aux = ref abb in    (*contains abb when the sup2 function is called*)
         let rec sup2 tree = match !tree with    (*puts in the key of 'aux' the higher key of the left tree of abb*)
@@ -101,6 +112,7 @@ let rec erase_r abb data =
                 |(_,Empty) -> abb := !l 
                 |(_,_) -> sup2 l;;      (*if the node have 2 sons we call sup2 *)
 
+(*erase a given value in a given tree iteratively*)
 let erase_i abb data = 
     let sons_num = ref 0 in                 (*the number of sons of the node to erase*)
     let sup = ref (ref Empty) in            (*node to erase*)
@@ -166,4 +178,5 @@ let erase_i abb data =
         ));
         ();;
 
+(*erase a given value in a given tree*)
 let eraseKey abb data = erase_i abb data;;

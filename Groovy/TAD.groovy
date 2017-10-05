@@ -19,14 +19,17 @@ class Node{
     }
 }
 
+//create a new node with the given key
 def createNodeA(int key){
     return new Node(key,null,null)
 }
 
+//return an empty tree
 def emptyTree(abb){
     return null
 }
 
+//insert the key into the given tree recursively
 def insert_r(abb,int key){
     if (abb == null)   // if abb is an empty tree we only need to put a new Node inside
         return createNodeA(key)
@@ -37,6 +40,7 @@ def insert_r(abb,int key){
     return abb
 }
 
+//insert the key into the given tree iteratively
 def insert_i(abb,int key){
     def new_node = createNodeA(key) // creation of a node containing the key to insert
 
@@ -63,10 +67,12 @@ def insert_i(abb,int key){
     }
 }
 
+//insert the key into the given tree
 def insertKey(abb,int key){
     return insert_i(abb,key)
 }
 
+//search a given value on the given tree recursively and returns the node containing it or null
 def search_r(abb,int key){
 	if (abb ==null)   // if the tree is empty the key can not be in it
 		return null
@@ -78,6 +84,7 @@ def search_r(abb,int key){
 		return search_r(abb.right,key)
 }
 
+//search a given value on the given tree iteratively and returns the node containing it or null
 def search_i(abb,int key){
 	def node = abb   // creation of the variable 'node' to iterate over the nodes of abb
 	while ((node !=null) && (node.root != key)){
@@ -89,22 +96,27 @@ def search_i(abb,int key){
 	return node
 }
 
+//search a given value on the given tree and returns the node containing it or null
 def	searchKey(abb,int key){
 	return search_r(abb,key)
 }
 
+//check if a tree is empty
 def isEmptyTree(abb){
     return abb == null
 }
 
+//return the key of a given tree
 def key(abb){
     return abb.root
 }
 
+//return the left son of a given tree
 def leftSon(abb){
     return abb.left
 }
 
+//return the right son of a given tree
 def rightSon(abb){
     return abb.right
 }
@@ -120,6 +132,7 @@ def sup2(tree,aux){   //puts in the key of 'aux' the higher key of the left tree
 	return aux
 }
 
+//erase a given value in a given tree recursively
 def erase_r(abb,int key){
 	def aux = null   // contains abb when the sup2 function is called
 
@@ -142,6 +155,7 @@ def erase_r(abb,int key){
 	return abb
 }			
 
+//erase a given value in a given tree iteratively
 def erase_i(abb,int key){
 	def sons_num = null			// the number of sons of the node to erase
 	def sup = null				// node to erase
@@ -205,6 +219,7 @@ def erase_i(abb,int key){
 	return abb
 }
 
+//erase a given value in a given tree
 def eraseKey(abb,int key){
 	return erase_r(abb,key)
 }

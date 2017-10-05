@@ -13,28 +13,16 @@ class Node:
 		self.left = None
 		self.right = None
 
+#create a new node with the given key
 def createNode(key):
-#CreateNodeA(key)->Node(Key,None,None)
-#***** Goal: Create a new node.
-#***** Input: key.
-#***** OutPut: Node(Key,None,None).
-#***** PreCondition:
 	return Node(key)
 
+#return an empty tree
 def emptyTree(abb):
-#Empty Tree(abb)-> None
-#***** Goal: Create a empty tree.
-#***** Input: Binary Tree
-#***** OutPut: None
-#***** PreCondition:
 	return None
 
+#insert the key into the given tree recursively
 def insert_r(abb,key):
-#insert_r(abb,key)-> Tree with new Key.
-#***** Goal: Insert key in the right place in the tree.
-#***** Input: Binary tree and key.
-#***** OutPut: Key inserted in the tree.
-#***** PreCondition: Initialized tree.
 	if abb is None:          # if abb is an empty tree we only need to put a new Node inside
 		return createNode(key)
 	else:
@@ -44,12 +32,8 @@ def insert_r(abb,key):
 			abb.right = insert_r(abb.right,key)
 	return abb
 
+#insert the key into the given tree iteratively
 def insert_i(abb,key):
-#insert_i(abb,key)-> Tree with new Key.
-#***** Goal: Insert key in the right place in the tree.
-#***** Input: Binary tree and key.
-#***** OutPut: Key inserted in the tree.
-#***** PreCondition: Initialized tree.
 	new_node = createNode(key)    # creation of a node containing the key to insert
 	
 	if abb is None:
@@ -71,20 +55,12 @@ def insert_i(abb,key):
 				father.right = new_node
 		return abb                                 # if 'son' is not null the key is already on the tree so there is nothing to do
 
+#insert the key into the given tree
 def	insertKey(abb,key):
-#insertKey(abb,key)-> Tree with new Key.
-#***** Goal: Insert key in the right place in the tree.
-#***** Input: Binary tree and key.
-#***** OutPut: Key inserted in the tree.
-#***** PreCondition: Initialized tree.
 	return insert_r(abb,key)
-		
+
+#search a given value on the given tree recursively and returns the node containing it or null		
 def search_r(abb,key):
-#search_r(abb,key)-> Node that contain the key.
-#***** Goal: Return the node which contains the key.
-#***** Input: Binary tree and key.
-#***** OutPut: Node that contains the key.
-#***** PreCondition: Initialized tree.
 	if abb is None:         # if the tree is empty the key can not be in itif the tree is empty the key can not be in it
 		return None
 	elif abb.key == key:    # if the current node has the key we just return it
@@ -94,12 +70,8 @@ def search_r(abb,key):
 	else:
 		return search_r(abb.right,key)
 
+#search a given value on the given tree iteratively and returns the node containing it or null	
 def search_i(abb,key):
-#search_i(abb,key)-> Node that contain the key.
-#***** Goal: Return the node which contains the key.
-#***** Input: Binary tree and key.
-#***** OutPut: Node that contains the key.
-#***** PreCondition: Initialized tree.
 	node = abb    # reation of the variable 'node' to iterate over the nodes of abb
 	while node is not None and node.key != key:
 		if key < node.key:    # we iterate over 'node' until we get the node with the searched key o null
@@ -108,54 +80,28 @@ def search_i(abb,key):
 			node = node.right
 	return node
 
-#------------------------Search key----------------------#	
+#search a given value on the given tree and returns the node containing it or null	
 def	searchKey(abb,key):
-#searchKey(abb,key)-> Node that contain the key.
-#***** Goal: Return the node which contains the key.
-#***** Input: Binary tree and key.
-#***** OutPut: Node that contains the key.
-#***** PreCondition: Initialized tree.
 	return search_i(abb,key)	
 
+#return the left son of a given tree
 def leftSon(abb):
-#leftSon(abb)-> Left son of the tree.
-#***** Goal: Returns the left branch of the tree.
-#***** Input: Binary tree not null.
-#***** OutPut: Returns the left branch of the tree.
-#***** PreCondition: Initialized tree.
 	return abb.left
 
+#return the right son of a given tree
 def rightSon(abb):
-#rightSon(abb)-> Right son of the tree.
-#***** Goal: Returns the right branch of the tree.
-#***** Input: Binary tree not null.
-#***** OutPut: Returns the left branch of the tree.
-#***** PreCondition: Initialized tree.
 	return abb.right
 
+#return the key of a given tree
 def key(abb):
-#key(abb)-> Root.
-#***** Goal: Returns the root of the tree.
-#***** Input: Binary tree not null.
-#***** OutPut: Returns the root.
-#***** PreCondition:Initialized tree.
 	return abb.key
 
+#check if a tree is empty
 def isEmptyTree(abb):
-#isEmptyTree(abb)-> Boolean.
-#***** Goal: Indicates if the tree is empty.
-#***** Input: Binary tree.
-#***** OutPut: Boolean.
-#***** PreCondition:Initialized tree.
 	return abb is None
 
+#erase a given value in a given tree recursively
 def erase_r(abb,key):
-#erase_r(abb,key)-> Tree without the key.
-#***** Goal: Remove the key from the tree.
-#***** Input: Binary tree and key.
-#***** OutPut: Tree without the key.
-#***** PreCondition:Initialized tree.
-
 	aux = None          # contains abb when the sup2 function is called
 
 	def sup2(tree):     # puts in the key of 'aux' the higher key of the left tree of abb
@@ -182,13 +128,10 @@ def erase_r(abb,key):
 				abb = sup2(abb.left)                # if the node have 2 sons we call sup2 
 			aux = None
 	return abb
-			
+
+#erase a given value in a given tree iteratively			
 def erase_i(abb,key):
-#erase_i(abb,key)-> Tree without the key.
-#***** Goal: Remove the key from the tree.
-#***** Input: Binary tree and key.
-#***** OutPut: Tree without the key.
-#***** PreCondition:Initialized tree.
+
 	sons_num = None              # the number of sons of the node to erase
 	sup = None					 # node to erase
 	f_sup = None				 # father of the node to erase
@@ -250,10 +193,7 @@ def erase_i(abb,key):
 		sup = None	
 	return abb
 
+
+#erase a given value in a given tree
 def eraseKey(abb,key):
-#eraseKey(abb,key)-> Tree without the key.
-#***** Goal: Remove the key from the tree.
-#***** Input: Binary tree and key.
-#***** OutPut: Tree without the key.
-#***** PreCondition:Initialized tree.
 	return erase_i(abb,key)

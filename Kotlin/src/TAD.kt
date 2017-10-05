@@ -1,3 +1,12 @@
+/*
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Email1: yeray.mendez@udc.es
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+***** Email2: d.rivera1@udc.es
+*/
+
 package bst.tad
 
 class Node(key: Int){
@@ -7,19 +16,21 @@ class Node(key: Int){
     var right : Node? = null
 }
 
+//create a new node with the given key
 fun createNode(key: Int): Node{
     return Node(key)
 }
 
+//return an empty tree
 fun emptyTree(): Node?{
     return null
 } 
 
+//insert the key into the given tree recursively
 fun insert_r(abb_in: Node?, key: Int): Node?{
     var abb = abb_in
 
 	if (abb == null){   // if abb is an empty tree we only need to put a new Node inside
-		return createNode(key)
 		abb = createNode(key)
     }else{
 		if (key < abb.key)		// if the key to insert is lower than the one in abb we call the same function with his left tree
@@ -30,6 +41,7 @@ fun insert_r(abb_in: Node?, key: Int): Node?{
     return abb
 }
 
+//insert the key into the given tree iteratively
 fun insert_i(abb_in: Node?,key: Int): Node?{
 	var new_node = createNode(key)  // creation of a node containing the key to insert
 	var abb = abb_in				// creation of variables 'son' an 'father' to iterate over the nodes of the tree
@@ -60,10 +72,12 @@ fun insert_i(abb_in: Node?,key: Int): Node?{
     }
 }
 
+//insert the key into the given tree
 fun insertKey(abb: Node?,key: Int): Node?{
     return insert_i(abb,key)
 }
 
+//search a given value on the given tree recursively and returns the node containing it or null
 fun search_r(abb_in: Node?,key: Int): Node?{
     var abb = abb_in
 
@@ -77,6 +91,7 @@ fun search_r(abb_in: Node?,key: Int): Node?{
 		return search_r(abb.right,key)
 }
 
+//search a given value on the given tree iteratively and returns the node containing it or null
 fun search_i(abb_in: Node?,key: Int): Node?{
 	var node = abb_in  // creation of the variable 'node' to iterate over the nodes of abb
 
@@ -89,26 +104,32 @@ fun search_i(abb_in: Node?,key: Int): Node?{
 	return node
 }
 
+//search a given value on the given tree and returns the node containing it or null
 fun	searchKey(abb: Node?,key: Int): Node?{
 	return search_r(abb,key)
 }	
 
+//return the left son of a given tree
 fun leftSon(abb: Node?): Node?{
 	return abb?.left
 }
-		
+
+//return the right son of a given tree		
 fun rightSon(abb: Node?): Node?{
 	return abb?.right
 }
-			
+
+//return the key of a given tree		
 fun key(abb: Node?): Int{
 	return abb!!.key
 }
-		
+
+//check if a tree is empty		
 fun isEmptyTree(abb: Node?): Boolean{
 	return (abb == null)
 }
 
+//erase a given value in a given tree recursively
 fun erase_r(abb_in: Node?,key: Int): Node?{
     var abb = abb_in
 	var aux: Node?  // contains abb when the sup2 function is called
@@ -144,6 +165,7 @@ fun erase_r(abb_in: Node?,key: Int): Node?{
 	return abb
 }
 
+//erase a given value in a given tree iteratively
 fun erase_i(abb_in: Node?,key: Int): Node?{
     var abb = abb_in
 	var sons_num: Int			// the number of sons of the node to erase
@@ -205,7 +227,8 @@ fun erase_i(abb_in: Node?,key: Int): Node?{
     }	
 	return abb
 }
-			
+
+//erase a given value in a given tree			
 fun eraseKey(abb: Node?,key: Int): Node?{
 	return erase_i(abb,key)
 }

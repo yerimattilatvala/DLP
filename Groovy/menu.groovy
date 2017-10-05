@@ -86,7 +86,7 @@ def menu(){
                     break
             }
         }catch (Exception e) {
-            println("\nError,do not enter a letter or search for a number that not is in the tree, try again.") //Catch error
+            println("\nError,do not enter a letter or search for a number that is not in the tree, try again.") //Catch error
             println ("--------------------------------------------")
         }
         
