@@ -1,5 +1,15 @@
-from TAD import *
+#
+#***** Autor1: Yeray Méndez Romero
+#***** Login1: yeray.mendez
+#***** Email1: yeray.mendez@udc.es
+#***** Autor2: Daniel Rivera López
+#***** Login2: d.rivera1
+#***** Email2: d.rivera1@udc.es
+# 
 
+from TAD import * # Import TAD operations.
+
+#-------------Draw the tree-------------#
 def preorderWithBracket(abb):
 	print('(', end="")
 	if not isEmptyTree(abb):
@@ -12,6 +22,7 @@ def preorderWithBracket(abb):
 			print(' ',key(abb),' ', end="")
 	print(')', end="")
 		
+#---------------Test---------------#
 def test():
 	tree = emptyTree(None)
 	tree = insertKey(tree,4)

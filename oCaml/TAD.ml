@@ -1,33 +1,54 @@
+(*
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Email1: yeray.mendez@udc.es
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+***** Email2: d.rivera1@udc.es
+*)
+
+(****************************TAD****************************)
+
 type intabb = 
     Empty 
     | Node of int * intabb ref * intabb ref;;
 
-let error s = 
-    print_endline s;
-    exit(0);;
+(*******************EmptyTree*******************)
 
 let emptyTree = Empty;;
+
+(*******************isEmptyTree*******************)
 
 let isEmptyTree abb = match abb with
 Empty -> true
 |Node(_,_,_) -> false;;
 
+(*******************Key******************)
+
 let key abb = match abb with
 |Node(key,_,_) -> key ;;
+
+(*******************LeftSon*******************)
 
 let leftSon abb = match abb with
 Empty -> ref Empty
 |Node(_,left,_) -> left;;
 
+(*******************RightSon*******************)
+
 let rightSon abb = match abb with
 Empty -> ref Empty
 |Node(_,_,right) -> right;;
+
+(*******************Recursive Insert*******************)
 
 let rec insert_r abb data =  match !abb with
     Empty -> abb := Node(data,ref Empty,ref Empty)
     |Node(key,left,right) -> 
         if data < key then insert_r left data
         else if data>key then insert_r right data;;
+
+(*******************Iterative Insert*******************)
 
 let insert_i abb data = 
     let newNode = Node(data,ref Empty,ref Empty) in
@@ -54,7 +75,11 @@ let insert_i abb data =
             );;
 
 
+(*******************Insert Key*******************)
+
 let insertKey abb data = insert_r abb data;;
+
+(*******************Recursive Search*******************)
 
 let rec search_r abb data = match !abb with
     Empty -> Empty
@@ -62,6 +87,8 @@ let rec search_r abb data = match !abb with
         if data < k then search_r left data
         else if data > k then search_r right data
         else !abb;; 
+
+(*******************Iterative Search*******************)
 
 let search_i abb data =
     let node = ref !abb in
@@ -73,7 +100,11 @@ let search_i abb data =
     done;
     !node;;
 
+(*******************Search Key*******************)
+
 let searchKey abb data = search_r abb data;;
+
+(*******************Recursive Erase*******************)
 
 let rec erase_r abb data = 
     let aux = ref abb in
@@ -97,6 +128,8 @@ let rec erase_r abb data =
                 |(_,Empty) -> abb := !l 
                 |(_,_) -> sup2 l;;
                 
+
+(*******************Iterative Erase*******************)
 
 let erase_i abb data = 
     let sons_num = ref 0 in
@@ -162,4 +195,5 @@ let erase_i abb data =
         ));
         ();;
 
+(*******************Erase Key*******************)
 let eraseKey abb data = erase_i abb data;;

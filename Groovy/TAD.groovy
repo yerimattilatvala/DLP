@@ -1,3 +1,13 @@
+/*
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Email1: yeray.mendez@udc.es
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+***** Email2: d.rivera1@udc.es
+*/
+
+/************************TAD************************/
 class Node{
     def root
     def left
@@ -10,13 +20,19 @@ class Node{
     }
 }
 
+/***************CreateNodeA***************/
+
 def createNodeA(int key){
     return new Node(key,null,null)
 }
 
+/***************EmptyTree***************/
+
 def emptyTree(abb){
     return null
 }
+
+/***************Recursive Insert***************/
 
 def insert_r(abb,int key){
     if (abb == null)
@@ -27,6 +43,8 @@ def insert_r(abb,int key){
         abb.right = insert_r(abb.right,key)
     return abb
 }
+
+/***************Iterative Insert***************/
 
 def insert_i(abb,int key){
     def new_node = createNodeA(key)
@@ -55,9 +73,13 @@ def insert_i(abb,int key){
     
 }
 
+/***************Insert Key***************/
+
 def insertKey(abb,int key){
     return insert_i(abb,key)
 }
+
+/***************Recursive Search***************/
 
 def search_r(abb,int key){
 	if (abb ==null)
@@ -70,6 +92,8 @@ def search_r(abb,int key){
 		return search_r(abb.right,key)
 }
 			
+/***************Iterative Search***************/
+
 def search_i(abb,int key){
 	def node = abb
 	while ((node !=null) && (node.root != key)){
@@ -81,36 +105,48 @@ def search_i(abb,int key){
 	return node
 }
 
+/***************Search Key***************/
+
 def	searchKey(abb,int key){
 	return search_r(abb,key)
 }
+
+/***************isEmptyTree***************/
 
 def isEmptyTree(abb){
     return abb == null
 }
 
+/***************Key***************/
+
 def key(abb){
     return abb.root
 }
+
+/***************LeftSon***************/
 
 def leftSon(abb){
     return abb.left
 }
 
+/***************RightSon***************/
+
 def rightSon(abb){
     return abb.right
 }
 
-//tuven que definila fora que non deixa definir funcions dentro de outras
+//Auxiliar function of erase_r
 def sup2(tree,aux){
-		if (tree.right!= null)
-			tree.right = sup2(tree.right,aux)
-		else{
-			aux.root = tree.root
-			return tree.left
-        }
-		return aux
-    }
+	if (tree.right!= null)
+		tree.right = sup2(tree.right,aux)
+	else{
+		aux.root = tree.root
+		return tree.left
+	}
+	return aux
+}
+
+/***************Recursive Erase***************/
 
 def erase_r(abb,int key){
 	def aux = null
@@ -133,6 +169,8 @@ def erase_r(abb,int key){
     }
 	return abb
 }			
+
+/***************Iterative Erase***************/
 
 def erase_i(abb,int key){
 	def sons_num = null
@@ -196,7 +234,9 @@ def erase_i(abb,int key){
     }
 	return abb
 }
-					
+
+/***************Erase Key***************/
+
 def eraseKey(abb,int key){
 	return erase_r(abb,key)
 }

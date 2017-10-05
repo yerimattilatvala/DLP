@@ -1,5 +1,16 @@
-tad = new TAD()
-test = new abb_program()
+/*
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Email1: yeray.mendez@udc.es
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+***** Email2: d.rivera1@udc.es
+*/
+
+tad = new TAD() //Import TAD operations.
+test = new abb_program() //Import preorderWithBracket function and the test.
+
+/*****************Menu****************/
 
 def menu(){
 

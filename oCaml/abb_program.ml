@@ -1,4 +1,15 @@
-open TAD
+(*
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Email1: yeray.mendez@udc.es
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+***** Email2: d.rivera1@udc.es
+*)
+
+open TAD (*Import TAD operations .*)
+
+(***********************Draw the tree***********************)
 
 let rec preorderWithBracket abb = 
     print_string "(";
@@ -21,6 +32,7 @@ let rec preorderWithBracket abb =
         end;
         print_string ")";;
 
+(***********************Test***********************)
 let test i = match i with
     0->()
     |1->

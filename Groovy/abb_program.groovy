@@ -1,3 +1,14 @@
+/*
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Email1: yeray.mendez@udc.es
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+***** Email2: d.rivera1@udc.es
+*/
+
+/****************Draw the tree****************/
+
 def preorderWithBracket(abb){
     tad = new TAD()
     print '('
@@ -14,6 +25,8 @@ def preorderWithBracket(abb){
     }
 	print ')'
 }
+
+/****************Test****************/
 
 def test(){
     tad = new TAD()

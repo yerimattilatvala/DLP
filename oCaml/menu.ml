@@ -1,8 +1,16 @@
-(*ocamlopt -0 menu TAD.ml abb_program.ml menu.ml*)
+(*
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Email1: yeray.mendez@udc.es
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+***** Email2: d.rivera1@udc.es
+*)
 
-open TAD
-open Abb_program
+open TAD (*Import TAD operations .*)
+open Abb_program (*Import preorderWithBracket function and the test.*)
 
+(*****************Menu*****************)
 let menu  exit= 
   print_string("\n*******************************************");
   print_string("\nWelcome to ABB's menu of operations");
@@ -71,7 +79,7 @@ let menu  exit=
           Failure ("int_of_string")->
             print_string("\nError,do not enter a letter, try again.\n");
             submenu abb1 false
-          |Match_failure("TAD.ml", 15, 14) ->
+          |Match_failure("TAD.ml", 28, 14) ->
             print_string("Error,do not search for a number that contains the tree, try again. \n");
             submenu abb1 false
           

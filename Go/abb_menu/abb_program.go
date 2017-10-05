@@ -1,7 +1,17 @@
+/****** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Email1: yeray.mendez@udc.es
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+***** Email2: d.rivera1@udc.es
+*/
+
 package main
 
 import "fmt"
- 
+
+/*************Draw the tree*************/
+
 func preorderWithBracket(a ABB) {
 	fmt.Printf("(")
 	if !isEmptyTree(a){
@@ -16,6 +26,8 @@ func preorderWithBracket(a ABB) {
 	}
 	fmt.Printf(")")
 }
+
+/*************Test*************/
 
 func test() {
 	var abb ABB

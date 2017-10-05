@@ -1,4 +1,15 @@
+/*
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Email1: yeray.mendez@udc.es
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+***** Email2: d.rivera1@udc.es
+*/
+
 package main
+
+/********************TAD********************/
 
 type tKey int
 
@@ -9,13 +20,19 @@ type tNodeA struct{
 
 type ABB *tNodeA
 
+/*************CreateNodeA*************/
+
 func createNodeA(a *ABB){
 	*a = new(tNodeA)
 }
 
+/*************EmptyTree*************/
+
 func emptyTree(a *ABB) {
 	*a = nil
 }
+
+/*************Recursive Insert*************/
 
 func insert_r(a *ABB, key tKey){
 	if *a == nil{
@@ -29,6 +46,8 @@ func insert_r(a *ABB, key tKey){
 		insert_r(&(*a).right,key)
 	}
 }
+
+/*************Iterative Insert*************/
 
 func insert_i(a *ABB, key tKey){
 	var new, father, son ABB
@@ -60,9 +79,13 @@ func insert_i(a *ABB, key tKey){
 	}
 }
 
+/*************Insert Key*************/
+
 func insertKey(a *ABB , key tKey){
 	insert_i(a,key)
 }
+
+/*************Recursive Search*************/
 
 func search_r(a ABB ,key tKey) ABB{
 	if a == nil{
@@ -75,6 +98,8 @@ func search_r(a ABB ,key tKey) ABB{
 		return search_r((*a).right,key)
 	}
 }
+
+/*************Iterative Search*************/
 
 func search_i(a ABB ,key tKey) ABB{
 	var node ABB
@@ -89,25 +114,36 @@ func search_i(a ABB ,key tKey) ABB{
 	return node
 }
 
+/*************Search Key*************/
+
 func searchKey(a ABB, key tKey) ABB{
 	return search_i(a,key)
 }
+
+/*************LeftSon*************/
 
 func leftSon(a ABB) ABB{
 	return a.left
 }
 
+/*************RightSon*************/
+
 func rightSon(a ABB) ABB{
 	return a.right
 }
+
+/*************Key*************/
 
 func key(a ABB) tKey{
 	return a.key
 }
 
+/*************isEmptyTree*************/
 func isEmptyTree(a ABB) bool{
 	return a == nil
 }
+
+/*************Recursive Erase*************/
 
 func erase_r(a *ABB, key tKey){
 	var aux ABB
@@ -140,6 +176,8 @@ func erase_r(a *ABB, key tKey){
 		}
 	}
 }
+
+/*************Iterative Erase*************/
 
 func erase_i(a *ABB, key tKey){
 	var numSons int
@@ -207,6 +245,8 @@ func erase_i(a *ABB, key tKey){
 	} 
 
 }
+
+/************Erase Key*************/
 
 func eraseKey(a *ABB, key tKey){
 	erase_r(a,key)
