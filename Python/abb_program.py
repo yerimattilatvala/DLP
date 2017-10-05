@@ -11,6 +11,11 @@ from TAD import * # Import TAD operations.
 
 #-------------Draw the tree-------------#
 def preorderWithBracket(abb):
+#preorderWithBracket(abb)-> ().
+#***** Goal: Draw the tree.
+#***** Input: Binary tree.
+#***** OutPut: Tree drawing.
+#***** PreCondition:Initialized tree.
 	print('(', end="")
 	if not isEmptyTree(abb):
 		if not isEmptyTree(leftSon(abb)) or not isEmptyTree(rightSon(abb)):
@@ -64,4 +69,3 @@ def test():
 	eraseKey(tree,2)
 	preorderWithBracket(tree)
 	print()
-test()
