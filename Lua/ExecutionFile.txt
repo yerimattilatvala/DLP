@@ -1,0 +1,3 @@
+
+to run it simply write in a terminal:
+	-$ lua ./menu.lua

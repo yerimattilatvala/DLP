@@ -1,0 +1,4 @@
+
+to run it simply write in a terminal:
+	-$ kotlinc menu.kt -include-runtime -d output_name.jar src
+	-$ java -jar ./output_name.jar
