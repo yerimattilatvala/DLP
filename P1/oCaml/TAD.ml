@@ -11,7 +11,8 @@ type intabb =
     Empty 
     | Node of int * intabb ref * intabb ref;;
 
-let emptyTree = Empty;;
+let emptyTree abb = 
+    abb := Empty;;
 
 (*check if a tree is empty*)
 let isEmptyTree abb = match abb with
@@ -42,12 +43,12 @@ let rec insert_r abb data =  match !abb with
 (*insert the key into the given tree iteratively*)
 let insert_i abb data = 
     let newNode = Node(data,ref Empty,ref Empty) in (*creation of a node containing the key to insert*)
-    let father = ref (ref emptyTree) in (*creation of variables 'son' an 'father' to iterate over the nodes of the tree*)
-    let son = ref (ref emptyTree) in
+    let father = ref (ref Empty) in (*creation of variables 'son' an 'father' to iterate over the nodes of the tree*)
+    let son = ref (ref Empty) in
     match !abb with
         Empty -> abb := newNode (*if abb is an empty tree we only need to put a new Node inside*)
         |Node(_,_,_)-> (
-            !father := emptyTree;
+            !father := Empty;
             son := abb;
             while (!(!son) != Empty) && ((key !(!son)) != data) do  (*the iteration takes place until 'son' is null or...*)
                 father := !son;                                     (*the key to insert is the same as the one in 'son'...*)

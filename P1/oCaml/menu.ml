@@ -16,7 +16,8 @@ let menu  exit=
   print_string("\nWelcome to ABB's menu of operations");
   print_string("\n*******************************************\n");
   print_string("\n-------------------------------------------\n");
-  let abb = ref emptyTree in
+  let abb = ref Empty in
+  emptyTree abb;
   let rec submenu abb1  exit1 = 
     if exit1 = false then begin
       print_string "\n";
@@ -79,7 +80,7 @@ let menu  exit=
           Failure ("int_of_string")->
             print_string("\nError,do not enter a letter, try again.\n");
             submenu abb1 false
-          |Match_failure("TAD.ml", 28, 14) ->
+          |Match_failure("TAD.ml", 23, 14) ->
             print_string("The number is not on the tree. \n");
             submenu abb1 false
           

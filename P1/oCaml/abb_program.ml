@@ -36,7 +36,8 @@ let rec preorderWithBracket abb =
 let test i = match i with
     0->()
     |1->
-        let abb = ref emptyTree in
+        let abb = ref Empty in
+        emptyTree abb;
         insertKey abb 4;
         insertKey abb 4;
         insertKey abb 2;
