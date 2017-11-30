@@ -43,7 +43,15 @@ let openfile infile =                                               (*Open the f
             with Sys_error m -> trynext rest
   in trynext !searchpath
 
-let parseFile inFile =
+let parseFile inFile line= match inFile with
+  ""->
+    let lexbuf = Lexing.from_string line 
+    in let result =
+    try Parser.toplevel Lexer.main lexbuf with Parsing.Parse_error -> 
+    error (Lexer.info lexbuf) "Parse error"
+    in
+      Parsing.clear_parser(); result
+  |_->
   let pi = openfile inFile
   in let lexbuf = Lexer.create inFile pi
   in let result =
@@ -68,7 +76,7 @@ let rec process_command ctx cmd = match cmd with
   
 let process_file f ctx =
   alreadyImported := f :: !alreadyImported;
-  let cmds,_ = parseFile f ctx in
+  let cmds,_ = parseFile f "" ctx in
   let g ctx c =  
     open_hvbox 0;
     let results = process_command ctx c in
@@ -77,38 +85,38 @@ let process_file f ctx =
   in
     List.fold_left g ctx cmds
 
-let createAuxFile name contain=       (*creo un archivo de texto donde introduzco las expresiones del modo itertivo*)
-  let oc = open_out name in           (*asi despues se pueden procesar como en un fichero que es lo que le pasan*)
-  output_string oc contain;           (*hice sto porque cuando abres un fichero cada linea se pasa a un in_channel*)
-  close_out oc;                       (*asi este puede ser procesado como en una ejecucion con un fichero*)
-  name;;                              (*no encontre otra forma ya que no encontre un metodo que formatee string in_channel*)
-
 let shell value ctx=
   print_string("\n*******************************************");
   print_string("\nWelcome to Iterative Mode");
   print_string("\n*******************************************\n");
   print_string("\n-------------------------------------------\n");
-  print_string("Write the expresion to load.\n");
-  print_string("If write exit you go out of iterative mode.\n");
-  let rec shell_aux value = 
+  print_string("Choose option:\n");
+  print_string("Write a expresion to load.\n");
+  print_string("Exit if you go out of iterative mode.\n");
+  let rec shell_aux value ctx2= 
+    let ctx_aux = ref ctx2 in
   if value = false then begin
     print_newline();
     let line = read_line() in
-    let inFile = createAuxFile "aux.txt" line in
     match line with
     "exit"->
-      Sys.remove inFile;
-      shell_aux true
-    | line->
-      let _ = process_file inFile emptycontext in
-      ();
-      print_string("\n-------------------------------------------\n");
-      Sys.remove inFile;
-      shell_aux false
+      shell_aux true ctx2
+    |line->
+      let cmds,_ = parseFile "" line ctx2 in
+      let g ctx c =  
+        open_hvbox 0;
+        let results = process_command ctx2 c in
+        print_flush();
+        ctx_aux := results;
+        results
+      in
+        List.fold_left g ctx2 cmds;
+      print_string("\n-------------------------------------------\n");     
+      shell_aux false !ctx_aux
   end
   else
     print_string("Go out of iterative mode....\n");
-  in shell_aux value;;
+  in shell_aux value ctx;;
 
 let main () =                                 (*Modify here*)
   let inFile = parseArgs() in
@@ -119,7 +127,7 @@ let main () =                                 (*Modify here*)
       let _ = process_file inFile emptycontext in
       ()
       let () = set_max_boxes 1000
-      let () = set_margin 67
+      let () = set_margin 67;;
       let res = 
         Printexc.catch (fun () -> 
           try main();0 
@@ -127,4 +135,3 @@ let main () =                                 (*Modify here*)
       ()
       let () = print_flush()
       let () = exit res
-        

@@ -85,10 +85,14 @@ and start    = ref 0
 and filename = ref ""
 and startLex = ref dummyinfo
 
-let create inFile stream =
-  if not (Filename.is_implicit inFile) then filename := inFile
-  else filename := Filename.concat (Sys.getcwd()) inFile;
-  lineno := 1; start := 0; Lexing.from_channel stream
+let create inFile stream = match inFile with
+ ""->
+    print_string("Llega aqui");
+    Lexing.from_channel stream 
+ |_->
+    if not (Filename.is_implicit inFile) then filename := inFile  (*Filename.is_implicit-> devuelve true si inFile referencia relativa a un fichero y si este no empieza con una referencia a un path*)
+    else filename := Filename.concat (Sys.getcwd()) inFile;
+    lineno := 1; start := 0; Lexing.from_channel stream (*Devuelve buffer para leer*)
 
 let newline lexbuf = incr lineno; start := (Lexing.lexeme_start lexbuf)
 
