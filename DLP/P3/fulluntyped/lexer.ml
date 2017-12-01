@@ -78,14 +78,10 @@ and start    = ref 0
 and filename = ref ""
 and startLex = ref dummyinfo
 
-let create inFile stream = match inFile with
- ""->
-    print_string("Llega aqui");
-    Lexing.from_channel stream 
- |_->
-    if not (Filename.is_implicit inFile) then filename := inFile  (*Filename.is_implicit-> devuelve true si inFile referencia relativa a un fichero y si este no empieza con una referencia a un path*)
-    else filename := Filename.concat (Sys.getcwd()) inFile;
-    lineno := 1; start := 0; Lexing.from_channel stream (*Devuelve buffer para leer*)
+let create inFile stream = 
+  if not (Filename.is_implicit inFile) then filename := inFile  (*Filename.is_implicit-> devuelve true si inFile referencia relativa a un fichero y si este no empieza con una referencia a un path*)
+  else filename := Filename.concat (Sys.getcwd()) inFile;
+  lineno := 1; start := 0; Lexing.from_channel stream (*Devuelve buffer para leer*)
 
 let newline lexbuf = incr lineno; start := (Lexing.lexeme_start lexbuf)
 
@@ -122,7 +118,7 @@ let getStr () = String.sub (!stringBuffer) 0 (!stringEnd)
 let extractLineno yytext offset =
   int_of_string (String.sub yytext offset (String.length yytext - offset))
 
-# 126 "lexer.ml"
+# 122 "lexer.ml"
 let __ocaml_lex_tables = {
   Lexing.lex_base = 
    "\000\000\241\255\242\255\243\255\244\255\091\000\006\000\101\000\
@@ -341,79 +337,79 @@ let rec main lexbuf =
 and __ocaml_lex_main_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 137 "lexer.mll"
+# 133 "lexer.mll"
                            ( main lexbuf )
-# 347 "lexer.ml"
+# 343 "lexer.ml"
 
   | 1 ->
-# 139 "lexer.mll"
+# 135 "lexer.mll"
                                   ( newline lexbuf; main lexbuf )
-# 352 "lexer.ml"
+# 348 "lexer.ml"
 
   | 2 ->
-# 141 "lexer.mll"
+# 137 "lexer.mll"
        ( error (info lexbuf) "Unmatched end of comment" )
-# 357 "lexer.ml"
+# 353 "lexer.ml"
 
   | 3 ->
-# 143 "lexer.mll"
+# 139 "lexer.mll"
        ( depth := 1; startLex := info lexbuf; comment lexbuf; main lexbuf )
-# 362 "lexer.ml"
+# 358 "lexer.ml"
 
   | 4 ->
-# 146 "lexer.mll"
+# 142 "lexer.mll"
     ( lineno := extractLineno (text lexbuf) 2 - 1; getFile lexbuf )
-# 367 "lexer.ml"
+# 363 "lexer.ml"
 
   | 5 ->
-# 149 "lexer.mll"
+# 145 "lexer.mll"
     ( lineno := extractLineno (text lexbuf) 7 - 1; getFile lexbuf )
-# 372 "lexer.ml"
+# 368 "lexer.ml"
 
   | 6 ->
-# 152 "lexer.mll"
+# 148 "lexer.mll"
     ( Parser.INTV{i=info lexbuf; v=int_of_string (text lexbuf)} )
-# 377 "lexer.ml"
+# 373 "lexer.ml"
 
   | 7 ->
-# 155 "lexer.mll"
+# 151 "lexer.mll"
     ( Parser.FLOATV{i=info lexbuf; v=float_of_string (text lexbuf)} )
-# 382 "lexer.ml"
+# 378 "lexer.ml"
 
   | 8 ->
-# 159 "lexer.mll"
+# 155 "lexer.mll"
     ( createID (info lexbuf) (text lexbuf) )
-# 387 "lexer.ml"
+# 383 "lexer.ml"
 
   | 9 ->
-# 163 "lexer.mll"
+# 159 "lexer.mll"
     ( createID (info lexbuf) (text lexbuf) )
-# 392 "lexer.ml"
+# 388 "lexer.ml"
 
   | 10 ->
-# 166 "lexer.mll"
+# 162 "lexer.mll"
     ( createID (info lexbuf) (text lexbuf) )
-# 397 "lexer.ml"
+# 393 "lexer.ml"
 
   | 11 ->
-# 170 "lexer.mll"
+# 166 "lexer.mll"
     ( createID (info lexbuf) (text lexbuf) )
-# 402 "lexer.ml"
+# 398 "lexer.ml"
 
   | 12 ->
-# 172 "lexer.mll"
+# 168 "lexer.mll"
        ( resetStr(); startLex := info lexbuf; string lexbuf )
-# 407 "lexer.ml"
+# 403 "lexer.ml"
 
   | 13 ->
-# 174 "lexer.mll"
+# 170 "lexer.mll"
       ( Parser.EOF(info lexbuf) )
-# 412 "lexer.ml"
+# 408 "lexer.ml"
 
   | 14 ->
-# 176 "lexer.mll"
+# 172 "lexer.mll"
      ( error (info lexbuf) "Illegal character" )
-# 417 "lexer.ml"
+# 413 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_main_rec lexbuf __ocaml_lex_state
@@ -423,29 +419,29 @@ and comment lexbuf =
 and __ocaml_lex_comment_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 180 "lexer.mll"
+# 176 "lexer.mll"
     ( depth := succ !depth; comment lexbuf )
-# 429 "lexer.ml"
+# 425 "lexer.ml"
 
   | 1 ->
-# 182 "lexer.mll"
+# 178 "lexer.mll"
     ( depth := pred !depth; if !depth > 0 then comment lexbuf )
-# 434 "lexer.ml"
+# 430 "lexer.ml"
 
   | 2 ->
-# 184 "lexer.mll"
+# 180 "lexer.mll"
     ( error (!startLex) "Comment not terminated" )
-# 439 "lexer.ml"
+# 435 "lexer.ml"
 
   | 3 ->
-# 186 "lexer.mll"
+# 182 "lexer.mll"
     ( comment lexbuf )
-# 444 "lexer.ml"
+# 440 "lexer.ml"
 
   | 4 ->
-# 188 "lexer.mll"
+# 184 "lexer.mll"
     ( newline lexbuf; comment lexbuf )
-# 449 "lexer.ml"
+# 445 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_comment_rec lexbuf __ocaml_lex_state
@@ -455,9 +451,9 @@ and getFile lexbuf =
 and __ocaml_lex_getFile_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 191 "lexer.mll"
+# 187 "lexer.mll"
             ( getName lexbuf )
-# 461 "lexer.ml"
+# 457 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_getFile_rec lexbuf __ocaml_lex_state
@@ -467,9 +463,9 @@ and getName lexbuf =
 and __ocaml_lex_getName_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 194 "lexer.mll"
+# 190 "lexer.mll"
                 ( filename := (text lexbuf); finishName lexbuf )
-# 473 "lexer.ml"
+# 469 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_getName_rec lexbuf __ocaml_lex_state
@@ -479,9 +475,9 @@ and finishName lexbuf =
 and __ocaml_lex_finishName_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 197 "lexer.mll"
+# 193 "lexer.mll"
                 ( main lexbuf )
-# 485 "lexer.ml"
+# 481 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_finishName_rec lexbuf __ocaml_lex_state
@@ -491,29 +487,29 @@ and string lexbuf =
 and __ocaml_lex_string_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 200 "lexer.mll"
+# 196 "lexer.mll"
        ( Parser.STRINGV {i = !startLex; v=getStr()} )
-# 497 "lexer.ml"
+# 493 "lexer.ml"
 
   | 1 ->
-# 201 "lexer.mll"
+# 197 "lexer.mll"
        ( addStr(escaped lexbuf); string lexbuf )
-# 502 "lexer.ml"
+# 498 "lexer.ml"
 
   | 2 ->
-# 202 "lexer.mll"
+# 198 "lexer.mll"
        ( addStr '\n'; newline lexbuf; string lexbuf )
-# 507 "lexer.ml"
+# 503 "lexer.ml"
 
   | 3 ->
-# 203 "lexer.mll"
+# 199 "lexer.mll"
        ( error (!startLex) "String not terminated" )
-# 512 "lexer.ml"
+# 508 "lexer.ml"
 
   | 4 ->
-# 204 "lexer.mll"
+# 200 "lexer.mll"
        ( addStr (Lexing.lexeme_char lexbuf 0); string lexbuf )
-# 517 "lexer.ml"
+# 513 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_string_rec lexbuf __ocaml_lex_state
@@ -523,32 +519,32 @@ and escaped lexbuf =
 and __ocaml_lex_escaped_rec lexbuf __ocaml_lex_state =
   match Lexing.engine __ocaml_lex_tables __ocaml_lex_state lexbuf with
       | 0 ->
-# 207 "lexer.mll"
+# 203 "lexer.mll"
        ( '\n' )
-# 529 "lexer.ml"
+# 525 "lexer.ml"
 
   | 1 ->
-# 208 "lexer.mll"
+# 204 "lexer.mll"
        ( '\t' )
-# 534 "lexer.ml"
+# 530 "lexer.ml"
 
   | 2 ->
-# 209 "lexer.mll"
+# 205 "lexer.mll"
         ( '\\' )
-# 539 "lexer.ml"
+# 535 "lexer.ml"
 
   | 3 ->
-# 210 "lexer.mll"
+# 206 "lexer.mll"
          ( '\034'  )
-# 544 "lexer.ml"
+# 540 "lexer.ml"
 
   | 4 ->
-# 211 "lexer.mll"
+# 207 "lexer.mll"
         ( '\'' )
-# 549 "lexer.ml"
+# 545 "lexer.ml"
 
   | 5 ->
-# 213 "lexer.mll"
+# 209 "lexer.mll"
     (
       let x = int_of_string(text lexbuf) in
       if x > 255 then
@@ -556,12 +552,12 @@ and __ocaml_lex_escaped_rec lexbuf __ocaml_lex_state =
       else
 	Char.chr x
     )
-# 560 "lexer.ml"
+# 556 "lexer.ml"
 
   | 6 ->
-# 221 "lexer.mll"
+# 217 "lexer.mll"
     ( error (info lexbuf) "Illegal character constant" )
-# 565 "lexer.ml"
+# 561 "lexer.ml"
 
   | __ocaml_lex_state -> lexbuf.Lexing.refill_buff lexbuf; 
       __ocaml_lex_escaped_rec lexbuf __ocaml_lex_state
