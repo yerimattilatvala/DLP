@@ -2,3 +2,12 @@ Al pulsar x
 Abrir "Notepad"
 Mensaje "Block de notas abierto"
 fin
+e f fin
+a "hola" fin
+
+
+
+
+Funcion "abriTerminal" 
+Abrir "Notepad"
+fin

@@ -13,7 +13,7 @@ void yyerror (char const *);
 	float valFloat;
 	char * valStr;
 }
-%token ABRIR FIN MENSAJE HOTKEY
+%token ABRIR FIN MENSAJE HOTKEY FUNCION FINPARAMETROS
 %token <valStr> TECLA
 %token <valStr> CADENA
 %token <valStr> VAR
@@ -23,7 +23,7 @@ S : e | comando e;
 
 e : e x | x;
 
-x : hotkey | hotstring | remap;
+x : hotkey | hotstring | remap | funcion;
 
 hotkey : HOTKEY tecla_print_aux comando FIN 
 	{
@@ -37,6 +37,23 @@ tecla_print_aux : TECLA //Para evitar tener que guardar las cadenas
 	}
 ;
 
+print_cadena : CADENA 
+	{
+		char aux[100] = "";
+		strncpy(aux,$1+1,strlen($1)-2);
+		fprintf(f,"%s(",aux);
+	}
+;
+funcion_print_aux : FUNCION print_cadena parametro 
+	{
+		fprintf(f,")\n{\n");
+	}
+;
+funcion : funcion_print_aux comando FIN
+	{
+		fprintf(f,"}\n");
+	}
+;
 comando : comando accion | accion;
 
 accion : ABRIR CADENA 
@@ -53,18 +70,30 @@ accion : ABRIR CADENA
 		fprintf(f,"MsgBox, %s\n",aux);
 	}
 ;
-//parametro : parametro VAR | VAR;
 
+parametro :  
+	{
+	}
+	| parametro VAR
+	{
+		fprintf(f,"%s, ",$2);
+	}
+	| parametro VAR FINPARAMETROS 
+	{
+		fprintf(f,"%s",$2);
+	}
+	
+;
 hotstring : TECLA CADENA FIN
 	{
 		char aux[100] = "";
-		strncpy(aux,$2+1,strlen($2)-1);
+		strncpy(aux,$2+1,strlen($2)-2);
 		fprintf(f,"::%s::%s\n",$1,aux);
 	};
 
 remap : TECLA TECLA FIN
 	{
-		fprintf(f,"remap tecla %s ; \n",$1);
+		fprintf(f,"%s::%s\n",$1,$2);
 	};
 
 %%
