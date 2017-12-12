@@ -8,6 +8,10 @@ a "hola" fin
 
 
 
-Funcion "abriTerminal" 
-Abrir "Notepad"
+Funcion "abrirTerminal" -> hola adios
+Mensaje hola
+Mensaje adios
 fin
+"abrirTerminal"
+ hola adios
+

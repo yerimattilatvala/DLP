@@ -4,7 +4,5 @@ MsgBox, Block de notas abierto
 return
 e::f
 ::a::hola
-abriTerminal()
+abrirTerminal()
 {
-Run Notepad
-}

@@ -4,12 +4,17 @@
 #include "p3.tab.h"
 
 %}
-
+numero [0-9]
 cadena \"[^"]+\"
 tecla [^ \n\t]
 variable [A-Za-z]{2,}
-
+int "-"?{numero}+
+double {int}"."{numero}+
+operacion [+"-"*/]{1}
 %%
+{operacion} {yylval.valStr =strdup(yytext); return OPERACION;};
+{int}|{double} {yylval.valStr =strdup(yytext); return DIGITO;};
+"=" {return ASIGNACION;};
 "->" {return FINPARAMETROS;};
 "Funcion" {return FUNCION;};
 "Al pulsar" {return HOTKEY;};

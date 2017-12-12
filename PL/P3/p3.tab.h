@@ -51,9 +51,12 @@ extern int yydebug;
     HOTKEY = 261,
     FUNCION = 262,
     FINPARAMETROS = 263,
-    TECLA = 264,
-    CADENA = 265,
-    VAR = 266
+    ASIGNACION = 264,
+    TECLA = 265,
+    CADENA = 266,
+    VAR = 267,
+    OPERACION = 268,
+    DIGITO = 269
   };
 #endif
 /* Tokens.  */
@@ -63,22 +66,25 @@ extern int yydebug;
 #define HOTKEY 261
 #define FUNCION 262
 #define FINPARAMETROS 263
-#define TECLA 264
-#define CADENA 265
-#define VAR 266
+#define ASIGNACION 264
+#define TECLA 265
+#define CADENA 266
+#define VAR 267
+#define OPERACION 268
+#define DIGITO 269
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 11 "p3.y" /* yacc.c:1909  */
+#line 16 "p3.y" /* yacc.c:1909  */
 
 	int valInt;
 	float valFloat;
 	char * valStr;
 
-#line 82 "p3.tab.h" /* yacc.c:1909  */
+#line 88 "p3.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

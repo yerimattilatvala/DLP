@@ -6,6 +6,10 @@ extern int yylineno;
 FILE *f;
 int yylex();
 void yyerror (char const *);
+
+int pos = 0;
+void insertar(int pos, letras lista[],char*varible);
+int existe(char*variable,letras lista[]);
 %}
 %error-verbose
 %union{
@@ -13,10 +17,10 @@ void yyerror (char const *);
 	float valFloat;
 	char * valStr;
 }
-%token ABRIR FIN MENSAJE HOTKEY FUNCION FINPARAMETROS
+%token ABRIR FIN MENSAJE HOTKEY FUNCION FINPARAMETROS ASIGNACION
 %token <valStr> TECLA
 %token <valStr> CADENA
-%token <valStr> VAR
+%token <valStr> VAR OPERACION DIGITO
 %start S
 %%
 S : e | comando e;
@@ -68,6 +72,14 @@ accion : ABRIR CADENA
 		char aux[100] = "";
 		strncpy(aux,$2+1,strlen($2)-2);
 		fprintf(f,"MsgBox, %s\n",aux);
+	}
+	| print_asignacion CADENA
+	{
+		
+	}
+	| print_asignacion DIGITO
+	{
+
 	}
 ;
 
@@ -130,3 +142,17 @@ extern FILE *yyin;
 }
 void yyerror (char const *message) {fprintf (stderr, "%s\n", message);
 }
+void insertar (int pos, letras lista[],char*variable) 
+{
+	strcpy(lista[pos],variable);
+};
+int existe (char*variable,letras lista[]) 
+{
+	int i;
+	for (i = 0;i < pos;i++){
+		if (strcmp(variable,lista[i])){
+			return 1;
+		}
+	}
+	return 0;
+};
