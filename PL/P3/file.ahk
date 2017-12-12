@@ -1,5 +1,5 @@
 x::
-Run Notepad
+abriTerminal()
 MsgBox, Block de notas abierto
 return
 e::f

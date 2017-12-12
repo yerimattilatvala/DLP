@@ -11,13 +11,21 @@ open Support.Error
 open Syntax
 open Core
 
+(* Defines the default searchpath to "" *)
 let searchpath = ref [""]
 
+(* Define the program option '-I' wich will concatenate the string provided by the user next on the right of
+    this option on the front of the actual 'searchpath' *)
 let argDefs = [
   "-I",
       Arg.String (fun f -> searchpath := f::!searchpath),
       "Append a directory to the search path"]
 
+(* Receive the input parameters and returns depending on the number of them:
+    0 -> "Empty" used for start the iterative mode
+    1 -> The input file name
+    >1 -> error
+*)
 let parseArgs () =                                                  (*Function that examine the input arguments*)
   let inFile = ref (None : string option) in
   Arg.parse argDefs
@@ -34,6 +42,12 @@ let parseArgs () =                                                  (*Function t
         "Empty"
   | Some(s) -> s                                                    (*Return test.f*)
 
+(* Tries to open the input file provided by the user, in the current directory if the user did not 
+    provided a path to the program with the option '-I', or if the user provided a path, it tries 
+    to concatenate the path with the input file, if it fails to find the file, it tries again 
+    with a path letter less until ir reaches the input file name.
+    If this last option fails it returns an error 
+*)
 let openfile infile =                                               (*Open the file*)
   let rec trynext l = match l with
         [] -> err ("Could not find " ^ infile)
@@ -43,6 +57,11 @@ let openfile infile =                                               (*Open the f
             with Sys_error m -> trynext rest
   in trynext !searchpath
 
+(* This function gets as input an empty string or a file name
+    in each of these options, a lexbuf is created to allow to read the comands,
+    in the first case it is created from the line parameter and in the other 
+    from the file name provided, and calls 'Parser.toplevel to parse the parameters, storing the result
+    on 'result' *)
 let parseFile inFile line= match inFile with
   ""->
     let lexbuf = Lexing.from_string line 
@@ -60,8 +79,10 @@ let parseFile inFile line= match inFile with
 in
   Parsing.clear_parser(); close_in pi; result
 
+(**)
 let alreadyImported = ref ([] : string list)
 
+(**)
 let rec process_command ctx cmd = match cmd with
   | Eval(fi,t) -> 
       let t' = eval ctx t in
@@ -73,7 +94,8 @@ let rec process_command ctx cmd = match cmd with
       let bind' = evalbinding ctx bind in
       pr x; pr " "; prbinding ctx bind'; force_newline();
       addbinding ctx x bind'
-  
+
+(**)
 let process_file f line ctx = (*añado linea para asi usar esta funcion y no replicar codigo*)
   alreadyImported := f :: !alreadyImported;
   let cmds,_ = parseFile f line ctx in
@@ -85,6 +107,10 @@ let process_file f line ctx = (*añado linea para asi usar esta funcion y no rep
   in
     List.fold_left g ctx cmds
 
+(* This function is called when the program is launched without parameters
+   it reads each line the user writes and process it, keeping the context 
+   for the next  line with the variable 'ctx_aux', the funtion stops when the user 
+   sends one line with 'exit' to the program *)
 let shell value ctx=
   print_string("\n*******************************************");
   print_string("\nWelcome to Iterative Mode");
