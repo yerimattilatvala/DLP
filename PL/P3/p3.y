@@ -6,7 +6,8 @@ extern int yylineno;
 FILE *f;
 int yylex();
 void yyerror (char const *);
-
+typedef char letras[128];
+letras variables[128];
 int pos = 0;
 void insertar(int pos, letras lista[],char*varible);
 int existe(char*variable,letras lista[]);
@@ -60,6 +61,24 @@ funcion : funcion_print_aux comando FIN
 ;
 comando : comando accion | accion;
 
+print_asignacion : CADENA ASIGNACION
+	{
+		char aux[100] = "";
+		strncpy(aux,$1+1,strlen($1)-2);
+		fprintf(f,"%s=",aux);
+		insertar(pos,variables,$1);
+		pos++;
+	}
+;
+
+print_digito : DIGITO
+	{
+		char aux[100] = "";
+		strncpy(aux,$1+1,strlen($1)-2);
+		fprintf(f,"%s",aux);
+	}
+;
+
 accion : ABRIR CADENA 
 	{
 		char aux[100] = "";
@@ -75,11 +94,11 @@ accion : ABRIR CADENA
 	}
 	| print_asignacion CADENA
 	{
-		
+		fprintf(f,"%s/n",$2);
 	}
-	| print_asignacion DIGITO
+	| print_asignacion print_digito
 	{
-
+		fprintf(f,"/n");
 	}
 ;
 
@@ -140,7 +159,7 @@ extern FILE *yyin;
 	fclose(f);
 	return 0;
 }
-void yyerror (char const *message) {fprintf (stderr, "%s\n", message);
+void yyerror (char const *message) {fprintf (stderr, "%s %d\n", message,yylineno);
 }
 void insertar (int pos, letras lista[],char*variable) 
 {
