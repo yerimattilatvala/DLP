@@ -85,18 +85,26 @@ and start    = ref 0
 and filename = ref ""
 and startLex = ref dummyinfo
 
+(* Receive a file reference and stream that is used to return a buffer 
+   to read.
+*)
 let create inFile stream = 
   if not (Filename.is_implicit inFile) then filename := inFile  (*Filename.is_implicit-> devuelve true si inFile referencia relativa a un fichero y si este no empieza con una referencia a un path*)
   else filename := Filename.concat (Sys.getcwd()) inFile;
   lineno := 1; start := 0; Lexing.from_channel stream (*Devuelve buffer para leer*)
 
+(* This function receive a lexbuff, increment the lexbuf line and return returns the offset in the 
+   input stream of the first character of the matched string.
+*)
 let newline lexbuf = incr lineno; start := (Lexing.lexeme_start lexbuf)
 
+(* This function receive a Lexing.buffer and return file position info*)
 let info lexbuf =
   createInfo (!filename) (!lineno) (Lexing.lexeme_start lexbuf - !start)
 
+(* text = Lexing.lexeme : lexbuf -> string *)
 let text = Lexing.lexeme
-
+(* Returns a byte sequence of length 2048. *)
 let stringBuffer = ref (String.create 2048)
 let stringEnd = ref 0
 
@@ -120,8 +128,14 @@ in
       stringEnd := x+1
     end
 
+(* This function returns a string of length !stringEnd, containing the substring of 
+  !stringBuffer that starts at position 0 and has length !stringEnd.
+*)
 let getStr () = String.sub (!stringBuffer) 0 (!stringEnd)
 
+(* Receive a string and offset to extract another string which contain substring
+   yytext and converter into string
+*)
 let extractLineno yytext offset =
   int_of_string (String.sub yytext offset (String.length yytext - offset))
 }
