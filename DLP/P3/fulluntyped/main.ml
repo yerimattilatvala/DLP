@@ -14,7 +14,7 @@ open Core
 (* Defines the default searchpath to "" *)
 let searchpath = ref [""]
 
-(* Define the program option '-I' wich will concatenate the string provided by the user next on the right of
+(* Defines the program option '-I' wich will concatenate the string provided by the user next on the right of
     this option on the front of the actual 'searchpath' *)
 let argDefs = [
   "-I",
@@ -37,7 +37,7 @@ let parseArgs () =                                                  (*Function t
   match !inFile with
       (*None -> err "You must specify an input file" *)             (*Modify this line that allow start iterative mode*)
       None -> 
-        print_string("You not specify an input file\n"); 
+        print_string("You did not specify an input file\n"); 
         print_string("Starting iterative mode ...\n"); 
         "Empty"
   | Some(s) -> s                                                    (*Return test.f*)
@@ -95,7 +95,7 @@ let rec process_command ctx cmd = match cmd with
       pr x; pr " "; prbinding ctx bind'; force_newline(); (* pr -> Prints a string in the current pretty-printing box *)
       addbinding ctx x bind'
 
-(**)
+(* Parse the 'file or 'line' and process the comands found returning the result, calls to 'parsefile' and 'process_comand' *)
 let process_file f line ctx = (*añado linea para asi usar esta funcion y no replicar codigo*)
   alreadyImported := f :: !alreadyImported;
   let cmds,_ = parseFile f line ctx in
@@ -141,16 +141,18 @@ let shell value ctx=
     print_string("Going out of iterative mode....\n");
   in shell_aux value ctx;;
 
-let main () =                                 (*Modify here*)
+(* Decide to parse the file or run the shell *)
+let main () =
   let inFile = parseArgs() in
   match inFile with
   "Empty"->
-    shell false emptycontext
+      shell false emptycontext
   |_->
       let _ = process_file inFile "" emptycontext in
       ()
-      let () = set_max_boxes 1000
-      let () = set_margin 67;;
+      let () = set_max_boxes 1000(* Sets the maximum number of pretty-printing boxes simultaneously open. *)
+      let () = set_margin 67;;(* Sets the right margin to d (in characters): the pretty-printer splits lines
+                                 that overflow the right margin according to the break hints given. *)
       let res = 
         Printexc.catch (fun () -> 
           try main();0 
