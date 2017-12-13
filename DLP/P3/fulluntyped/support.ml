@@ -50,6 +50,7 @@ module Pervasive = struct
 
 type info = Error.info
 
+(* Prints a string in the current pretty-printing box *)
 let pr = Format.print_string
 
 end (* module pervasive *)

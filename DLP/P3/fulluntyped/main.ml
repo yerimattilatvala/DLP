@@ -45,8 +45,8 @@ let parseArgs () =                                                  (*Function t
 (* Tries to open the input file provided by the user, in the current directory if the user did not 
     provided a path to the program with the option '-I', or if the user provided a path, it tries 
     to concatenate the path with the input file, if it fails to find the file, it tries again 
-    with a path letter less until ir reaches the input file name.
-    If this last option fails it returns an error 
+    in the actual directory.
+    If this last option fails it returns an error. 
 *)
 let openfile infile =                                               (*Open the file*)
   let rec trynext l = match l with
@@ -82,7 +82,7 @@ in
 (**)
 let alreadyImported = ref ([] : string list)
 
-(**)
+(* Evaluate the current comand calling the evaluation functions of 'core.ml' *)
 let rec process_command ctx cmd = match cmd with
   | Eval(fi,t) -> 
       let t' = eval ctx t in
@@ -92,7 +92,7 @@ let rec process_command ctx cmd = match cmd with
   | Bind(fi,x,bind) -> 
       
       let bind' = evalbinding ctx bind in
-      pr x; pr " "; prbinding ctx bind'; force_newline();
+      pr x; pr " "; prbinding ctx bind'; force_newline(); (* pr -> Prints a string in the current pretty-printing box *)
       addbinding ctx x bind'
 
 (**)
@@ -108,7 +108,7 @@ let process_file f line ctx = (*añado linea para asi usar esta funcion y no rep
     List.fold_left g ctx cmds
 
 (* This function is called when the program is launched without parameters
-   it reads each line the user writes and process it, keeping the context 
+   it reads each line the user writes and calls 'process_file' to process it, keeping the context 
    for the next  line with the variable 'ctx_aux', the funtion stops when the user 
    sends one line with 'exit' to the program *)
 let shell value ctx=
@@ -118,22 +118,27 @@ let shell value ctx=
   print_string("\n-------------------------------------------\n");
   print_string("Choose option:\n");
   print_string("Write a expresion to load.\n");
-  print_string("Write exit if you go out of iterative mode.\n");
+  print_string("Write 'exit' to end iterative mode.\n");
   let rec shell_aux value ctx2= 
     let ctx_aux = ref ctx2 in
-  if value = false then begin
+  if not value  then begin
     print_newline();
     let line = read_line() in
     match line with
     "exit"->
       shell_aux true ctx2
     |line->
-      ctx_aux := process_file "" line ctx2;
+	  (
+		try
+			ctx_aux := process_file "" line ctx2;
+		with
+			e -> ()
+      );
       print_string("\n-------------------------------------------\n");     
       shell_aux false !ctx_aux
   end
   else
-    print_string("Go out of iterative mode....\n");
+    print_string("Going out of iterative mode....\n");
   in shell_aux value ctx;;
 
 let main () =                                 (*Modify here*)
@@ -141,7 +146,7 @@ let main () =                                 (*Modify here*)
   match inFile with
   "Empty"->
     shell false emptycontext
-  |"test.f"->
+  |_->
       let _ = process_file inFile "" emptycontext in
       ()
       let () = set_max_boxes 1000

@@ -1,0 +1,8 @@
+fix=lambda f. (lambda x. f (lambda y. x x y)) (lambda x. f (lambda y. x x y));
+
+
+g= lambda f. lambda n. if iszero(n) then succ(0) else timesfloat n (f (pred(n)));
+
+factorial= fix g;
+
+factorial 5;
