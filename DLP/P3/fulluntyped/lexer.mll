@@ -66,10 +66,15 @@ let reservedWords = [
 (* Support functions *)
 
 type buildfun = info -> Parser.token
+
+(* Creation of a hash table o 1024 positions (string,function) *)
 let (symbolTable : (string,buildfun) Hashtbl.t) = Hashtbl.create 1024
+
+(* Fill the table with the 'reservedWords' *)
 let _ =
   List.iter (fun (str,f) -> Hashtbl.add symbolTable str f) reservedWords
 
+(* Return a token for the current 'str' *)
 let createID i str =
   try (Hashtbl.find symbolTable str) i
   with _ ->
@@ -134,7 +139,7 @@ in
 let getStr () = String.sub (!stringBuffer) 0 (!stringEnd)
 
 (* Receive a string and offset to extract another string which contain substring
-   yytext and converter into string
+   yytext and converter into int
 *)
 let extractLineno yytext offset =
   int_of_string (String.sub yytext offset (String.length yytext - offset))

@@ -22,6 +22,7 @@ let rec isval ctx t = match t with
   | TmRecord(_,fields) -> List.for_all (fun (l,ti) -> isval ctx ti) fields
   | _ -> false
 
+(* Evaluates all types of terms recursively *)
 let rec eval1 ctx t = match t with
     TmIf(_,TmTrue(_),t2,t3) ->
       t2
@@ -92,11 +93,13 @@ let rec eval1 ctx t = match t with
   | _ -> 
       raise NoRuleApplies
 
+(* Evaluates the term 't' recursively *)
 let rec eval ctx t =
   try let t' = eval1 ctx t
       in eval ctx t'
   with NoRuleApplies -> t
 
+(* Evaluates the term inside the binding 'b' *)
 let evalbinding ctx b = match b with
     TmAbbBind(t) ->
       let t' = eval ctx t in 

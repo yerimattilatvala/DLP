@@ -34,8 +34,7 @@ let parseArgs () =                                                  (*Function t
          Some(_) -> err "You must specify exactly one input file";  (*Return this error if will pass two or more input arguments*)
        | None -> inFile := Some(s))
      "";
-  match !inFile with
-      (*None -> err "You must specify an input file" *)             (*Modify this line that allow start iterative mode*)
+  match !inFile with                                               (*Modify this line that allow start iterative mode*)
       None -> 
         print_string("You did not specify an input file\n"); 
         print_string("Starting iterative mode ...\n"); 
@@ -69,7 +68,8 @@ let parseFile inFile line= match inFile with
     try Parser.toplevel Lexer.main lexbuf with Parsing.Parse_error -> 
     error (Lexer.info lexbuf) "Parse error"
     in
-      Parsing.clear_parser(); result
+      Parsing.clear_parser(); (* Empty the parser stack to reduce memmory usage *)
+      result
   |_->
   let pi = openfile inFile
   in let lexbuf = Lexer.create inFile pi
@@ -96,7 +96,7 @@ let rec process_command ctx cmd = match cmd with
       addbinding ctx x bind'
 
 (* Parse the 'file or 'line' and process the comands found returning the result, calls to 'parsefile' and 'process_comand' *)
-let process_file f line ctx = (*añado linea para asi usar esta funcion y no replicar codigo*)
+let process_file f line ctx = 
   alreadyImported := f :: !alreadyImported;
   let cmds,_ = parseFile f line ctx in
   let g ctx c =  
