@@ -130,7 +130,7 @@ let shell value ctx=
     |line->
 	  (
 		try
-		-	ctx_aux := process_file "" line ctx2;
+		  ctx_aux := process_file "" line ctx2;
 		with
 			e -> ()
       );
