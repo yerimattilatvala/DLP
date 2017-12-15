@@ -26,20 +26,20 @@ let argDefs = [
     1 -> The input file name
     >1 -> error
 *)
-let parseArgs () =                                                  (*Function that examine the input arguments*)
+let parseArgs () =                                                 
   let inFile = ref (None : string option) in
   Arg.parse argDefs
      (fun s ->
        match !inFile with
-         Some(_) -> err "You must specify exactly one input file";  (*Return this error if will pass two or more input arguments*)
+         Some(_) -> err "You must specify exactly one input file";  
        | None -> inFile := Some(s))
      "";
-  match !inFile with                                               (*Modify this line that allow start iterative mode*)
+  match !inFile with                                               
       None -> 
         print_string("You did not specify an input file\n"); 
         print_string("Starting iterative mode ...\n"); 
         "Empty"
-  | Some(s) -> s                                                    (*Return test.f*)
+  | Some(s) -> s                                                    
 
 (* Tries to open the input file provided by the user, in the current directory if the user did not 
     provided a path to the program with the option '-I', or if the user provided a path, it tries 
@@ -59,7 +59,8 @@ let openfile infile =                                               (*Open the f
 (* This function gets as input an empty string or a file name
     in each of these options, a lexbuf is created to allow to read the comands,
     in the first case it is created from the line parameter and in the other 
-    from the file name provided, and calls 'Parser.toplevel to parse the parameters, storing the result
+    from the file name provided, and calls 'Lexer' to get the tokens from the lexbuf
+    and then calls the 'Parser' to check them against the grammar, storing the result
     on 'result' *)
 let parseFile inFile line= match inFile with
   ""->
@@ -79,10 +80,9 @@ let parseFile inFile line= match inFile with
 in
   Parsing.clear_parser(); close_in pi; result
 
-(**)
 let alreadyImported = ref ([] : string list)
 
-(* Evaluate the current comand calling the evaluation functions of 'core.ml' *)
+(* Evaluate the current comand calling the evaluation functions of 'core.ml' and print the result, return a new context *)
 let rec process_command ctx cmd = match cmd with
   | Eval(fi,t) -> 
       let t' = eval ctx t in
@@ -95,7 +95,7 @@ let rec process_command ctx cmd = match cmd with
       pr x; pr " "; prbinding ctx bind'; force_newline(); (* pr -> Prints a string in the current pretty-printing box *)
       addbinding ctx x bind'
 
-(* Parse the 'file or 'line' and process the comands found returning the result, calls to 'parsefile' and 'process_comand' *)
+(* Parse the 'file or 'line' and process the comands found returning the result wich will be the new context *)
 let process_file f line ctx = 
   alreadyImported := f :: !alreadyImported;
   let cmds,_ = parseFile f line ctx in
@@ -117,7 +117,7 @@ let shell value ctx=
   print_string("\n*******************************************\n");
   print_string("\n-------------------------------------------\n");
   print_string("Choose option:\n");
-  print_string("Write a expresion to load.\n");
+  print_string("Write a expresion to evaluate.\n");
   print_string("Write 'exit' to end iterative mode.\n");
   let rec shell_aux value ctx2= 
     let ctx_aux = ref ctx2 in
@@ -130,7 +130,7 @@ let shell value ctx=
     |line->
 	  (
 		try
-			ctx_aux := process_file "" line ctx2;
+		-	ctx_aux := process_file "" line ctx2;
 		with
 			e -> ()
       );

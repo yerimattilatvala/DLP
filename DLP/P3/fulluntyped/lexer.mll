@@ -90,31 +90,32 @@ and start    = ref 0
 and filename = ref ""
 and startLex = ref dummyinfo
 
-(* Receive a file reference and stream that is used to return a buffer 
-   to read.
-*)
+(* Initializes some info fields from the inFile and returns a buffer to read from 'stream'*)
 let create inFile stream = 
-  if not (Filename.is_implicit inFile) then filename := inFile  (*Filename.is_implicit-> devuelve true si inFile referencia relativa a un fichero y si este no empieza con una referencia a un path*)
+  if not (Filename.is_implicit inFile) then filename := inFile 
   else filename := Filename.concat (Sys.getcwd()) inFile;
-  lineno := 1; start := 0; Lexing.from_channel stream (*Devuelve buffer para leer*)
+  lineno := 1; start := 0; Lexing.from_channel stream 
 
-(* This function receive a lexbuff, increment the lexbuf line and return returns the offset in the 
-   input stream of the first character of the matched string.
+(* This function receive a lexbuff, increment the current line info and return returns 
+  the position in the input stream of the first character of the matched string.
 *)
 let newline lexbuf = incr lineno; start := (Lexing.lexeme_start lexbuf)
 
-(* This function receive a Lexing.buffer and return file position info*)
+(* This function receive a Lexing.buffer and return an info type with the name of the file,
+  the current line and the current position
+*)
 let info lexbuf =
   createInfo (!filename) (!lineno) (Lexing.lexeme_start lexbuf - !start)
 
-(* text = Lexing.lexeme : lexbuf -> string *)
+(* Returns the string matched by the regular expression *)
 let text = Lexing.lexeme
-(* Returns a byte sequence of length 2048. *)
+
 let stringBuffer = ref (String.create 2048)
 let stringEnd = ref 0
 
 let resetStr () = stringEnd := 0
 
+(* Puts the given character at the end of the filled part of 'stringBuffer' *)
 let addStr ch =
   let x = !stringEnd in
   let buffer = !stringBuffer
@@ -133,20 +134,17 @@ in
       stringEnd := x+1
     end
 
-(* This function returns a string of length !stringEnd, containing the substring of 
-  !stringBuffer that starts at position 0 and has length !stringEnd.
-*)
+(* Get the filled part of 'stringBuffer'*)
 let getStr () = String.sub (!stringBuffer) 0 (!stringEnd)
 
-(* Receive a string and offset to extract another string which contain substring
-   yytext and converter into int
-*)
+(* Get the line number *)
 let extractLineno yytext offset =
   int_of_string (String.sub yytext offset (String.length yytext - offset))
 }
 
 
 (* The main body of the lexical analyzer *)
+(* Rules to match with the text from the user input or file *)
 
 rule main = parse
   [' ' '\009' '\012']+     { main lexbuf }
