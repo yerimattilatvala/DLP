@@ -6,11 +6,24 @@ extern int yylineno;
 FILE *f;
 int yylex();
 void yyerror (char const *);
+/**********************************/
+struct funcion
+{
+	int nParam;
+	char *nombre;
+};
+struct funcion listaFunciones[128]; //listaFunciones
+int posFuncion = 0; 
+char nombreFun[128]; // variable global para guardar nombre de la funcion
+int nParam = 0;  // variable global para guaradr el numero de parametros de funcion
+/***********************************/
 typedef char letras[128];
 letras variables[128];
 int pos = 0;
-void insertar(int pos, letras lista[],char*varible);
-int existe(char*variable,letras lista[]);
+void insertarFun(struct funcion *lista,int pos);
+int existeFun(struct funcion *lista);
+void insertarVar(int pos, letras lista[],char*varible);
+int existeVar(char*variable,letras lista[]);
 %}
 %error-verbose
 %union{
@@ -18,17 +31,17 @@ int existe(char*variable,letras lista[]);
 	float valFloat;
 	char * valStr;
 }
-%token ABRIR FIN MENSAJE HOTKEY FUNCION FINPARAMETROS ASIGNACION RETURN
+%token ABRIR FIN MENSAJE HOTKEY FUNCION FINPARAMETROS ASIGNACION RETURN LLAMADAFUNCION
 %token <valStr> TECLA
 %token <valStr> CADENA
-%token <valStr> VAR OPERACION DIGITO
+%token <valStr> VAR OPERACION DIGITO GLOBAL
 %start S
 %%
 S : e | comando e ;
 
 e : e x | x;
 
-x : hotkey | hotstring | remap | funcion
+x : hotkey | hotstring | remap | funcion | llamarFun
 	| print_asignacion CADENA
 	{
 		fprintf(f,"%s\n",$2);
@@ -56,6 +69,7 @@ print_cadena : CADENA
 		char aux[100] = "";
 		strncpy(aux,$1+1,strlen($1)-2);
 		fprintf(f,"%s(",aux);
+		strncpy(nombreFun,aux,strlen(aux));
 	}
 ;
 funcion_print_aux : FUNCION print_cadena parametro 
@@ -66,6 +80,10 @@ funcion_print_aux : FUNCION print_cadena parametro
 funcion : funcion_print_aux cuerpoFuncion FIN
 	{
 		fprintf(f,"}\n");
+		//printf("%s NOMBREFUN\n",nombreFun);
+		//printf("%d NPARAM\n",nParam);
+		insertarFun(listaFunciones,posFuncion);
+		posFuncion++;
 	}
 ;
 
@@ -74,7 +92,7 @@ print_asignacion : VAR ASIGNACION
 		char aux[100] = "";
 		strncpy(aux,$1+1,strlen($1)-2);
 		fprintf(f,"%s=",aux);
-		insertar(pos,variables,aux);
+		insertarVar(pos,variables,aux);
 		pos++;
 	}
 ;
@@ -85,6 +103,12 @@ print_digito : DIGITO
 	}
 ;
 
+
+llamarFun: LLAMADAFUNCION print_cadena parametro FIN 
+	{
+		fprintf(f,")\n");
+	}
+;
 cuerpoFuncion : comando | print_return;
 comando : comando accion | accion;
 
@@ -118,6 +142,12 @@ print_var: VAR
 		strncpy(aux,$1+1,strlen($1)-2);
 		fprintf(f,"%s",aux);
 	}
+	|GLOBAL 
+	{
+		char aux[100] = "";
+		strncpy(aux,$1+1,strlen($1)-2);
+		fprintf(f,"%s",aux);
+	}
 ;
 
 parametro :  
@@ -126,9 +156,11 @@ parametro :
 	| parametro print_var
 	{
 		fprintf(f,", ");
+		nParam++;
 	}
 	| parametro print_var FINPARAMETROS 
 	{
+		nParam++;
 	}
 	
 ;
@@ -178,17 +210,35 @@ extern FILE *yyin;
 }
 void yyerror (char const *message) {fprintf (stderr, "%s \n", message);
 }
-void insertar (int pos, letras lista[],char*variable) 
+void insertarVar(int pos, letras lista[],char*variable) 
 {
 	strcpy(lista[pos],variable);
 };
-int existe (char*variable,letras lista[]) 
+int existeVar(char*variable,letras lista[]) 
 {
 	int i;
 	for (i = 0;i < pos;i++){
 		if (strcmp(variable,lista[i])){
 			return 1;
 		}
+	}
+	return 0;
+};
+
+void insertarFun(struct funcion *lista,int pos)
+{
+	struct funcion f;
+	f.nParam = nParam;
+	f.nombre = nombreFun;
+	lista[pos] = f;
+	nParam = 0;
+};
+
+int existeFun(struct funcion *lista)
+{
+	int i;
+	for(i=0;i<posFuncion;i++){
+		if(nParam == lista[i].nParam && nombreFun == lista[i].nombre) {return 1;}
 	}
 	return 0;
 };

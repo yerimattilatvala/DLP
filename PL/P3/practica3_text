@@ -5,10 +5,11 @@ fin
 e f fin
 a "hola" fin
 (tiempo) = "aaa"
-Funcion "Add" (2) (3) ->
-return (2) + (3)
+Funcion "Add" (x) (y) ->
+return (x) + (y)
 fin
 Funcion "abrirTerminal" 
 Abrir "Notepad"
 Mensaje "Block de notas abierto"
 fin
+Llamar "abrirTerminal" *tiempo* (1) -> fin

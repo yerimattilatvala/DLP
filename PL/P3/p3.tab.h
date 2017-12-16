@@ -53,11 +53,13 @@ extern int yydebug;
     FINPARAMETROS = 263,
     ASIGNACION = 264,
     RETURN = 265,
-    TECLA = 266,
-    CADENA = 267,
-    VAR = 268,
-    OPERACION = 269,
-    DIGITO = 270
+    LLAMADAFUNCION = 266,
+    TECLA = 267,
+    CADENA = 268,
+    VAR = 269,
+    OPERACION = 270,
+    DIGITO = 271,
+    GLOBAL = 272
   };
 #endif
 /* Tokens.  */
@@ -69,24 +71,26 @@ extern int yydebug;
 #define FINPARAMETROS 263
 #define ASIGNACION 264
 #define RETURN 265
-#define TECLA 266
-#define CADENA 267
-#define VAR 268
-#define OPERACION 269
-#define DIGITO 270
+#define LLAMADAFUNCION 266
+#define TECLA 267
+#define CADENA 268
+#define VAR 269
+#define OPERACION 270
+#define DIGITO 271
+#define GLOBAL 272
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE
 {
-#line 16 "p3.y" /* yacc.c:1909  */
+#line 29 "p3.y" /* yacc.c:1909  */
 
 	int valInt;
 	float valFloat;
 	char * valStr;
 
-#line 90 "p3.tab.h" /* yacc.c:1909  */
+#line 94 "p3.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

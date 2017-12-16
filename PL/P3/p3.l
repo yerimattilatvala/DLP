@@ -12,7 +12,8 @@ int "-"?{numero}+
 double {int}"."{numero}+
 operacion [+"-"*/]{1}
 %%
-"return" { return RETURN;};
+"return" {return RETURN;};
+"Llamar" {return LLAMADAFUNCION;};
 {operacion} {yylval.valStr =strdup(yytext); return OPERACION;};
 {int}|{double} {yylval.valStr =strdup(yytext); return DIGITO;};
 "=" {return ASIGNACION;};
@@ -23,6 +24,7 @@ operacion [+"-"*/]{1}
 "Mensaje" {return MENSAJE;};
 "fin" {return FIN;};
 "("{variable}")" {yylval.valStr = strdup(yytext); return VAR;};
+"*"{variable}"*" {yylval.valStr = strdup(yytext); return GLOBAL;};
 {cadena} {yylval.valStr = strdup(yytext); return CADENA;};
 {tecla} {yylval.valStr = strdup(yytext); return TECLA;};
 .;
