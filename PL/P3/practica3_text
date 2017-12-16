@@ -4,14 +4,11 @@ Mensaje "Block de notas abierto"
 fin
 e f fin
 a "hola" fin
-
-
-
-
-Funcion "abrirTerminal" -> hola adios
-Mensaje hola
-Mensaje adios
+(tiempo) = "aaa"
+Funcion "Add" (2) (3) ->
+return (2) + (3)
 fin
-"abrirTerminal"
- hola adios
-
+Funcion "abrirTerminal" 
+Abrir "Notepad"
+Mensaje "Block de notas abierto"
+fin
