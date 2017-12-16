@@ -18,17 +18,26 @@ int existe(char*variable,letras lista[]);
 	float valFloat;
 	char * valStr;
 }
-%token ABRIR FIN MENSAJE HOTKEY FUNCION FINPARAMETROS ASIGNACION
+%token ABRIR FIN MENSAJE HOTKEY FUNCION FINPARAMETROS ASIGNACION RETURN
 %token <valStr> TECLA
 %token <valStr> CADENA
 %token <valStr> VAR OPERACION DIGITO
 %start S
 %%
-S : e | comando e;
+S : e | comando e ;
 
 e : e x | x;
 
-x : hotkey | hotstring | remap | funcion;
+x : hotkey | hotstring | remap | funcion
+	| print_asignacion CADENA
+	{
+		fprintf(f,"%s\n",$2);
+	}
+	| print_asignacion print_digito
+	{
+		fprintf(f,"\n");
+	}
+;
 
 hotkey : HOTKEY tecla_print_aux comando FIN 
 	{
@@ -54,30 +63,30 @@ funcion_print_aux : FUNCION print_cadena parametro
 		fprintf(f,")\n{\n");
 	}
 ;
-funcion : funcion_print_aux comando FIN
+funcion : funcion_print_aux cuerpoFuncion FIN
 	{
 		fprintf(f,"}\n");
 	}
 ;
-comando : comando accion | accion;
 
-print_asignacion : CADENA ASIGNACION
+print_asignacion : VAR ASIGNACION
 	{
 		char aux[100] = "";
 		strncpy(aux,$1+1,strlen($1)-2);
 		fprintf(f,"%s=",aux);
-		insertar(pos,variables,$1);
+		insertar(pos,variables,aux);
 		pos++;
 	}
 ;
 
 print_digito : DIGITO
 	{
-		char aux[100] = "";
-		strncpy(aux,$1+1,strlen($1)-2);
-		fprintf(f,"%s",aux);
+		fprintf(f,"%s",$1);
 	}
 ;
+
+cuerpoFuncion : comando | print_return;
+comando : comando accion | accion;
 
 accion : ABRIR CADENA 
 	{
@@ -85,33 +94,41 @@ accion : ABRIR CADENA
 		strncpy(aux,$2+1,strlen($2)-2);
 		fprintf(f,"Run %s\n",aux);
 	}
-
 	| MENSAJE CADENA 
 	{
 		char aux[100] = "";
 		strncpy(aux,$2+1,strlen($2)-2);
 		fprintf(f,"MsgBox, %s\n",aux);
 	}
-	| print_asignacion CADENA
+;
+
+print_return : RETURN VAR OPERACION VAR 
 	{
-		fprintf(f,"%s/n",$2);
+		char aux[100] = "";
+		strncpy(aux,$2+1,strlen($2)-2);
+		char aux2[100] = "";
+		strncpy(aux2,$4+1,strlen($4)-2);
+		fprintf(f,"	return %s %s %s \n",aux,$3,aux2);
 	}
-	| print_asignacion print_digito
+;
+
+print_var: VAR
 	{
-		fprintf(f,"/n");
+		char aux[100] = "";
+		strncpy(aux,$1+1,strlen($1)-2);
+		fprintf(f,"%s",aux);
 	}
 ;
 
 parametro :  
 	{
 	}
-	| parametro VAR
+	| parametro print_var
 	{
-		fprintf(f,"%s, ",$2);
+		fprintf(f,", ");
 	}
-	| parametro VAR FINPARAMETROS 
+	| parametro print_var FINPARAMETROS 
 	{
-		fprintf(f,"%s",$2);
 	}
 	
 ;
@@ -159,7 +176,7 @@ extern FILE *yyin;
 	fclose(f);
 	return 0;
 }
-void yyerror (char const *message) {fprintf (stderr, "%s %d\n", message,yylineno);
+void yyerror (char const *message) {fprintf (stderr, "%s \n", message);
 }
 void insertar (int pos, letras lista[],char*variable) 
 {
