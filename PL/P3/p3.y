@@ -13,6 +13,7 @@ struct funcion
 	char *nombre;
 };
 struct funcion listaFunciones[128]; //listaFunciones
+struct funcion funcion;
 int posFuncion = 0; 
 char nombreFun[128]; // variable global para guardar nombre de la funcion
 int nParam = 0;  // variable global para guaradr el numero de parametros de funcion
@@ -20,10 +21,12 @@ int nParam = 0;  // variable global para guaradr el numero de parametros de func
 typedef char letras[128];
 letras variables[128];
 int pos = 0;
+char nombreVar[128];
 void insertarFun(struct funcion *lista,int pos);
 int existeFun(struct funcion *lista);
 void insertarVar(int pos, letras lista[],char*varible);
 int existeVar(char*variable,letras lista[]);
+int error = 1;
 %}
 %error-verbose
 %union{
@@ -69,9 +72,11 @@ print_cadena : CADENA
 		char aux[100] = "";
 		strncpy(aux,$1+1,strlen($1)-2);
 		fprintf(f,"%s(",aux);
-		strncpy(nombreFun,aux,strlen(aux));
+		funcion.nombre = $1;
+		strncpy(nombreFun,$1,strlen($1)); 
 	}
 ;
+
 funcion_print_aux : FUNCION print_cadena parametro 
 	{
 		fprintf(f,")\n{\n");
@@ -107,6 +112,10 @@ print_digito : DIGITO
 llamarFun: LLAMADAFUNCION print_cadena parametro FIN 
 	{
 		fprintf(f,")\n");
+		int i;
+		i = existeFun(listaFunciones);
+		if (i == 0) {
+			error =i;}
 	}
 ;
 cuerpoFuncion : comando | print_return;
@@ -147,6 +156,11 @@ print_var: VAR
 		char aux[100] = "";
 		strncpy(aux,$1+1,strlen($1)-2);
 		fprintf(f,"%s",aux);
+		int i;
+		i = existeVar(aux,variables);
+		if (i == 0){
+			error = i;
+		}
 	}
 ;
 
@@ -182,7 +196,9 @@ remap : TECLA TECLA FIN
 int main(int argc, char *argv[]) {
 extern FILE *yyin;
 	
-	f = fopen("file.ahk", "w");
+	char file[] = "file.ahk";
+	int borrado = 1;
+	f = fopen(file, "w");
 	if (f == NULL)
 	{
 	    printf("Error opening file!\n");
@@ -206,6 +222,12 @@ extern FILE *yyin;
 	}
 	
 	fclose(f);
+	if (error == 0){ borrado = remove(file); }
+	if(borrado == 0) {
+      printf("File deleted successfully");
+   } else {
+      printf("Error: unable to delete the file");
+   }
 	return 0;
 }
 void yyerror (char const *message) {fprintf (stderr, "%s \n", message);
@@ -218,7 +240,7 @@ int existeVar(char*variable,letras lista[])
 {
 	int i;
 	for (i = 0;i < pos;i++){
-		if (strcmp(variable,lista[i])){
+		if ((strcmp(variable,lista[i]))==0){
 			return 1;
 		}
 	}
@@ -227,18 +249,20 @@ int existeVar(char*variable,letras lista[])
 
 void insertarFun(struct funcion *lista,int pos)
 {
-	struct funcion f;
-	f.nParam = nParam;
-	f.nombre = nombreFun;
-	lista[pos] = f;
+	funcion.nParam = nParam;
+	lista[pos] = funcion;
 	nParam = 0;
+	memset(nombreFun, 0, strlen(nombreFun));
 };
 
 int existeFun(struct funcion *lista)
 {
 	int i;
 	for(i=0;i<posFuncion;i++){
-		if(nParam == lista[i].nParam && nombreFun == lista[i].nombre) {return 1;}
+		if((strcmp(nombreFun,lista[i].nombre))==0) {
+		memset(nombreFun, 0, strlen(nombreFun));
+		return 1;}
 	}
+	memset(nombreFun, 0, strlen(nombreFun));
 	return 0;
 };
