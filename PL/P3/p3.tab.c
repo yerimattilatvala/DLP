@@ -491,8 +491,8 @@ static const yytype_uint8 yyrline[] =
 {
        0,    43,    43,    43,    45,    45,    47,    47,    47,    47,
       47,    48,    52,    58,    64,    70,    80,    85,    95,   105,
-     112,   121,   121,   122,   122,   124,   130,   138,   148,   154,
-     168,   170,   175,   181,   188
+     112,   121,   121,   122,   122,   124,   130,   138,   155,   162,
+     176,   178,   183,   189,   196
 };
 #endif
 
@@ -1420,22 +1420,30 @@ yyreduce:
 		char aux2[100] = "";
 		strncpy(aux2,(yyvsp[0].valStr)+1,strlen((yyvsp[0].valStr))-2);
 		fprintf(f,"	return %s %s %s \n",aux,(yyvsp[-1].valStr),aux2);
+		char aux3[100]="";
+		strcat(aux3, aux);
+		strcat(aux3, aux2);
+		if ((strcmp(nombreVar,aux3))!=0){
+			error =0;
+		}
+		memset(nombreVar, 0, strlen(nombreVar));		
 	}
-#line 1425 "p3.tab.c" /* yacc.c:1646  */
+#line 1432 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 149 "p3.y" /* yacc.c:1646  */
+#line 156 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[0].valStr)+1,strlen((yyvsp[0].valStr))-2);
 		fprintf(f,"%s",aux);
+		strcat(nombreVar, aux);
 	}
-#line 1435 "p3.tab.c" /* yacc.c:1646  */
+#line 1443 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 155 "p3.y" /* yacc.c:1646  */
+#line 163 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[0].valStr)+1,strlen((yyvsp[0].valStr))-2);
@@ -1446,53 +1454,53 @@ yyreduce:
 			error = i;
 		}
 	}
-#line 1450 "p3.tab.c" /* yacc.c:1646  */
+#line 1458 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 168 "p3.y" /* yacc.c:1646  */
+#line 176 "p3.y" /* yacc.c:1646  */
     {
 	}
-#line 1457 "p3.tab.c" /* yacc.c:1646  */
+#line 1465 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 171 "p3.y" /* yacc.c:1646  */
+#line 179 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,", ");
-		nParam++;
-	}
-#line 1466 "p3.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 32:
-#line 176 "p3.y" /* yacc.c:1646  */
-    {
 		nParam++;
 	}
 #line 1474 "p3.tab.c" /* yacc.c:1646  */
     break;
 
+  case 32:
+#line 184 "p3.y" /* yacc.c:1646  */
+    {
+		nParam++;
+	}
+#line 1482 "p3.tab.c" /* yacc.c:1646  */
+    break;
+
   case 33:
-#line 182 "p3.y" /* yacc.c:1646  */
+#line 190 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[-1].valStr)+1,strlen((yyvsp[-1].valStr))-2);
 		fprintf(f,"::%s::%s\n",(yyvsp[-2].valStr),aux);
 	}
-#line 1484 "p3.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 34:
-#line 189 "p3.y" /* yacc.c:1646  */
-    {
-		fprintf(f,"%s::%s\n",(yyvsp[-2].valStr),(yyvsp[-1].valStr));
-	}
 #line 1492 "p3.tab.c" /* yacc.c:1646  */
     break;
 
+  case 34:
+#line 197 "p3.y" /* yacc.c:1646  */
+    {
+		fprintf(f,"%s::%s\n",(yyvsp[-2].valStr),(yyvsp[-1].valStr));
+	}
+#line 1500 "p3.tab.c" /* yacc.c:1646  */
+    break;
 
-#line 1496 "p3.tab.c" /* yacc.c:1646  */
+
+#line 1504 "p3.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1720,7 +1728,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 193 "p3.y" /* yacc.c:1906  */
+#line 201 "p3.y" /* yacc.c:1906  */
 
 
 

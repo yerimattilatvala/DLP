@@ -142,6 +142,13 @@ print_return : RETURN VAR OPERACION VAR
 		char aux2[100] = "";
 		strncpy(aux2,$4+1,strlen($4)-2);
 		fprintf(f,"	return %s %s %s \n",aux,$3,aux2);
+		char aux3[100]="";
+		strcat(aux3, aux);
+		strcat(aux3, aux2);
+		if ((strcmp(nombreVar,aux3))!=0){
+			error =0;
+		}
+		memset(nombreVar, 0, strlen(nombreVar));		
 	}
 ;
 
@@ -150,6 +157,7 @@ print_var: VAR
 		char aux[100] = "";
 		strncpy(aux,$1+1,strlen($1)-2);
 		fprintf(f,"%s",aux);
+		strcat(nombreVar, aux);
 	}
 	|GLOBAL 
 	{
