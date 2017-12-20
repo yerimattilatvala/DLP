@@ -14,4 +14,4 @@ abrirTerminal()
 Run Notepad
 MsgBox, Block de notas abierto
 }
-abrirTerminal(tiempo, 1)
+abrirTerminal()

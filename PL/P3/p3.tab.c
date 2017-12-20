@@ -82,18 +82,20 @@ struct funcion funcion;
 int posFuncion = 0; 
 char nombreFun[128]; // variable global para guardar nombre de la funcion
 int nParam = 0;  // variable global para guaradr el numero de parametros de funcion
+void insertarFun(struct funcion *lista,int pos);
+int existeFun(struct funcion *lista);
+int devolverNumParam(struct funcion *lista);
 /***********************************/
 typedef char letras[128];
 letras variables[128];
 int pos = 0;
 char nombreVar[128];
-void insertarFun(struct funcion *lista,int pos);
-int existeFun(struct funcion *lista);
 void insertarVar(int pos, letras lista[],char*varible);
 int existeVar(char*variable,letras lista[]);
+/***********************************/
 int error = 1;
 
-#line 97 "p3.tab.c" /* yacc.c:339  */
+#line 99 "p3.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -167,13 +169,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 32 "p3.y" /* yacc.c:355  */
+#line 34 "p3.y" /* yacc.c:355  */
 
 	int valInt;
 	float valFloat;
 	char * valStr;
 
-#line 177 "p3.tab.c" /* yacc.c:355  */
+#line 179 "p3.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -190,7 +192,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 194 "p3.tab.c" /* yacc.c:358  */
+#line 196 "p3.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -489,10 +491,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    43,    43,    43,    45,    45,    47,    47,    47,    47,
-      47,    48,    52,    58,    64,    70,    80,    85,    95,   105,
-     112,   121,   121,   122,   122,   124,   130,   138,   155,   162,
-     176,   178,   183,   189,   196
+       0,    45,    45,    45,    47,    47,    49,    49,    49,    49,
+      49,    50,    54,    60,    66,    72,    82,    87,    97,   107,
+     114,   128,   128,   129,   129,   131,   137,   145,   162,   169,
+     183,   185,   190,   196,   203
 };
 #endif
 
@@ -1297,39 +1299,39 @@ yyreduce:
   switch (yyn)
     {
         case 11:
-#line 49 "p3.y" /* yacc.c:1646  */
+#line 51 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,"%s\n",(yyvsp[0].valStr));
 	}
-#line 1305 "p3.tab.c" /* yacc.c:1646  */
+#line 1307 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 53 "p3.y" /* yacc.c:1646  */
+#line 55 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,"\n");
 	}
-#line 1313 "p3.tab.c" /* yacc.c:1646  */
+#line 1315 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 59 "p3.y" /* yacc.c:1646  */
+#line 61 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,"return\n");
 	}
-#line 1321 "p3.tab.c" /* yacc.c:1646  */
+#line 1323 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 65 "p3.y" /* yacc.c:1646  */
+#line 67 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,"%s::\n",(yyvsp[0].valStr));
 	}
-#line 1329 "p3.tab.c" /* yacc.c:1646  */
+#line 1331 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 71 "p3.y" /* yacc.c:1646  */
+#line 73 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[0].valStr)+1,strlen((yyvsp[0].valStr))-2);
@@ -1337,19 +1339,19 @@ yyreduce:
 		funcion.nombre = (yyvsp[0].valStr);
 		strncpy(nombreFun,(yyvsp[0].valStr),strlen((yyvsp[0].valStr))); 
 	}
-#line 1341 "p3.tab.c" /* yacc.c:1646  */
+#line 1343 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 81 "p3.y" /* yacc.c:1646  */
+#line 83 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,")\n{\n");
 	}
-#line 1349 "p3.tab.c" /* yacc.c:1646  */
+#line 1351 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 86 "p3.y" /* yacc.c:1646  */
+#line 88 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,"}\n");
 		//printf("%s NOMBREFUN\n",nombreFun);
@@ -1357,11 +1359,11 @@ yyreduce:
 		insertarFun(listaFunciones,posFuncion);
 		posFuncion++;
 	}
-#line 1361 "p3.tab.c" /* yacc.c:1646  */
+#line 1363 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 96 "p3.y" /* yacc.c:1646  */
+#line 98 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[-1].valStr)+1,strlen((yyvsp[-1].valStr))-2);
@@ -1369,51 +1371,56 @@ yyreduce:
 		insertarVar(pos,variables,aux);
 		pos++;
 	}
-#line 1373 "p3.tab.c" /* yacc.c:1646  */
+#line 1375 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 106 "p3.y" /* yacc.c:1646  */
+#line 108 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,"%s",(yyvsp[0].valStr));
 	}
-#line 1381 "p3.tab.c" /* yacc.c:1646  */
+#line 1383 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 113 "p3.y" /* yacc.c:1646  */
+#line 115 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,")\n");
-		int i;
+		int i,n;
 		i = existeFun(listaFunciones);
 		if (i == 0) {
-			error =i;}
+			error =i;
+		}else{
+			n = devolverNumParam(listaFunciones);
+			error = (n==nParam);
+		}
+		nParam = 0;
 	}
-#line 1393 "p3.tab.c" /* yacc.c:1646  */
+#line 1400 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 125 "p3.y" /* yacc.c:1646  */
+#line 132 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[0].valStr)+1,strlen((yyvsp[0].valStr))-2);
 		fprintf(f,"Run %s\n",aux);
 	}
-#line 1403 "p3.tab.c" /* yacc.c:1646  */
+#line 1410 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 131 "p3.y" /* yacc.c:1646  */
+#line 138 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[0].valStr)+1,strlen((yyvsp[0].valStr))-2);
 		fprintf(f,"MsgBox, %s\n",aux);
 	}
-#line 1413 "p3.tab.c" /* yacc.c:1646  */
+#line 1420 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 139 "p3.y" /* yacc.c:1646  */
+#line 146 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[-2].valStr)+1,strlen((yyvsp[-2].valStr))-2);
@@ -1428,22 +1435,22 @@ yyreduce:
 		}
 		memset(nombreVar, 0, strlen(nombreVar));		
 	}
-#line 1432 "p3.tab.c" /* yacc.c:1646  */
+#line 1439 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 156 "p3.y" /* yacc.c:1646  */
+#line 163 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[0].valStr)+1,strlen((yyvsp[0].valStr))-2);
 		fprintf(f,"%s",aux);
 		strcat(nombreVar, aux);
 	}
-#line 1443 "p3.tab.c" /* yacc.c:1646  */
+#line 1450 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 163 "p3.y" /* yacc.c:1646  */
+#line 170 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[0].valStr)+1,strlen((yyvsp[0].valStr))-2);
@@ -1454,53 +1461,53 @@ yyreduce:
 			error = i;
 		}
 	}
-#line 1458 "p3.tab.c" /* yacc.c:1646  */
-    break;
-
-  case 30:
-#line 176 "p3.y" /* yacc.c:1646  */
-    {
-	}
 #line 1465 "p3.tab.c" /* yacc.c:1646  */
     break;
 
+  case 30:
+#line 183 "p3.y" /* yacc.c:1646  */
+    {
+	}
+#line 1472 "p3.tab.c" /* yacc.c:1646  */
+    break;
+
   case 31:
-#line 179 "p3.y" /* yacc.c:1646  */
+#line 186 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,", ");
 		nParam++;
 	}
-#line 1474 "p3.tab.c" /* yacc.c:1646  */
+#line 1481 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 184 "p3.y" /* yacc.c:1646  */
+#line 191 "p3.y" /* yacc.c:1646  */
     {
 		nParam++;
 	}
-#line 1482 "p3.tab.c" /* yacc.c:1646  */
+#line 1489 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 190 "p3.y" /* yacc.c:1646  */
+#line 197 "p3.y" /* yacc.c:1646  */
     {
 		char aux[100] = "";
 		strncpy(aux,(yyvsp[-1].valStr)+1,strlen((yyvsp[-1].valStr))-2);
 		fprintf(f,"::%s::%s\n",(yyvsp[-2].valStr),aux);
 	}
-#line 1492 "p3.tab.c" /* yacc.c:1646  */
+#line 1499 "p3.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 197 "p3.y" /* yacc.c:1646  */
+#line 204 "p3.y" /* yacc.c:1646  */
     {
 		fprintf(f,"%s::%s\n",(yyvsp[-2].valStr),(yyvsp[-1].valStr));
 	}
-#line 1500 "p3.tab.c" /* yacc.c:1646  */
+#line 1507 "p3.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1504 "p3.tab.c" /* yacc.c:1646  */
+#line 1511 "p3.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1728,7 +1735,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 201 "p3.y" /* yacc.c:1906  */
+#line 208 "p3.y" /* yacc.c:1906  */
 
 
 
@@ -1796,12 +1803,23 @@ void insertarFun(struct funcion *lista,int pos)
 
 int existeFun(struct funcion *lista)
 {
-	int i;
+	int i,output = 0;
 	for(i=0;i<posFuncion;i++){
 		if((strcmp(nombreFun,lista[i].nombre))==0) {
-		memset(nombreFun, 0, strlen(nombreFun));
-		return 1;}
+		output = 1;
+		break;}
+	}
+	return output;
+};
+
+int devolverNumParam(struct funcion *lista)
+{
+	int i,output = -1;
+	for(i=0;i<posFuncion;i++){
+		if((strcmp(nombreFun,lista[i].nombre))==0) {
+		output = lista[i].nParam;
+		break;}
 	}
 	memset(nombreFun, 0, strlen(nombreFun));
-	return 0;
+	return output;
 };

@@ -17,15 +17,17 @@ struct funcion funcion;
 int posFuncion = 0; 
 char nombreFun[128]; // variable global para guardar nombre de la funcion
 int nParam = 0;  // variable global para guaradr el numero de parametros de funcion
+void insertarFun(struct funcion *lista,int pos);
+int existeFun(struct funcion *lista);
+int devolverNumParam(struct funcion *lista);
 /***********************************/
 typedef char letras[128];
 letras variables[128];
 int pos = 0;
 char nombreVar[128];
-void insertarFun(struct funcion *lista,int pos);
-int existeFun(struct funcion *lista);
 void insertarVar(int pos, letras lista[],char*varible);
 int existeVar(char*variable,letras lista[]);
+/***********************************/
 int error = 1;
 %}
 %error-verbose
@@ -112,10 +114,15 @@ print_digito : DIGITO
 llamarFun: LLAMADAFUNCION print_cadena parametro FIN 
 	{
 		fprintf(f,")\n");
-		int i;
+		int i,n;
 		i = existeFun(listaFunciones);
 		if (i == 0) {
-			error =i;}
+			error =i;
+		}else{
+			n = devolverNumParam(listaFunciones);
+			error = (n==nParam);
+		}
+		nParam = 0;
 	}
 ;
 cuerpoFuncion : comando | print_return;
@@ -265,12 +272,23 @@ void insertarFun(struct funcion *lista,int pos)
 
 int existeFun(struct funcion *lista)
 {
-	int i;
+	int i,output = 0;
 	for(i=0;i<posFuncion;i++){
 		if((strcmp(nombreFun,lista[i].nombre))==0) {
-		memset(nombreFun, 0, strlen(nombreFun));
-		return 1;}
+		output = 1;
+		break;}
+	}
+	return output;
+};
+
+int devolverNumParam(struct funcion *lista)
+{
+	int i,output = -1;
+	for(i=0;i<posFuncion;i++){
+		if((strcmp(nombreFun,lista[i].nombre))==0) {
+		output = lista[i].nParam;
+		break;}
 	}
 	memset(nombreFun, 0, strlen(nombreFun));
-	return 0;
+	return output;
 };

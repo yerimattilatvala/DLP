@@ -84,7 +84,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 32 "p3.y" /* yacc.c:1909  */
+#line 34 "p3.y" /* yacc.c:1909  */
 
 	int valInt;
 	float valFloat;
