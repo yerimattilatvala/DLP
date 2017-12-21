@@ -2047,6 +2047,7 @@ extern FILE *yyin;
 }
 void yyerror (char const *message) {
 	fatal_error = 1;
+	error = 0;
 	//fprintf (stderr, "Línea %d: %s \n",yylineno, message);
 }
 void insertarVar(int pos, letras lista[],char*variable) 

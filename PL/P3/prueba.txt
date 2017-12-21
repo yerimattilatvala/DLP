@@ -12,4 +12,4 @@ Funcion "abrirTerminal"
 Abrir "Notepad"
 Mensaje "Block de notas abierto"
 fin
-Llamar "abrirTerminal" fin
+Llamar "abrirTerminal" 
