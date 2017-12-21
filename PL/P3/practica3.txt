@@ -1,0 +1,40 @@
+***** Proyecto : Traductor de pseudocódigo a AutoHotkey
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+
+-Desarrollo:
+    La práctica se ha desarrollado utilizando las herramientas FLEX y Bison, el lenguaje de programación C, el compilador GCC sobre la plataforma Linux
+    y el programa AutoHotkey para comprobar la salida del programa. AutoHotkey es un programa libre y de código abierto que permite automatizar una gran 
+    variedad de operaciones repetitivas en Windows, por ejemplo:
+        -Reasignación del teclado. 
+        -Apertura de programas.
+        -Ejecución de comandos.
+        -Control del cursor del ratón con el teclado.
+        -Relleno de formularios.
+        -Supervisión del sistema.
+        -Definición de funciones.
+        -etc
+
+-Objetivo:
+    El objetivo que se quería alcanzar con este proyecto era el de proporcionar una forma cómoda para definir una serie de operaciones y comandos
+    en AutoHotkey. Debido al amplio abanico de funcionalidades que nos ofrece AutoHotkey, nos hemos visto obligados a acotar el proyecto a unas
+    operaciones concretas que mencionamos a continuación :
+        -Reasignación del teclado. 
+        -Apertura de programas.
+        -Definición de funciones y variables.
+
+-Funcionamiento:
+    El programa recibirá como parámetro de entrada un fichero de texto con un pseudocódigo de las tareas que queremos que realice AutoHotkey y 
+    devuelve un fichero con extensión "ahk" con las instrucciones que se ejecutarán.
+    La operaciones del fichero de entrada están definidas de la siguiente manera :
+
+
+    Los caracteres del fichero son analizados por el analizador léxico(fichero "p3.l") que enviará los tokens al analizador sintáctico(fichero "p3.y")
+    donde se procesarán las operaciones necesarias de la gramática.
+    (*Errores*)
+    La salida será un fichero.ahk con instrucciones del siguiente tipo:
+
+
+    Se ha incluido un Makefile para agilizar la compilación y ejecución y un fichero de prueba(prueba.txt).

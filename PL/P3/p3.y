@@ -391,9 +391,9 @@ extern FILE *yyin;
 	if (error == 0){
 		borrado = remove(file);
 		if(borrado == 0) {
-		      	printf("File deleted successfully\n");
+		      	printf("Error: File deleted successfully\n");
 	   	} else {
-		      	printf("Error: unable to delete the file\n");
+		      	printf("SUCCESS\n");
 	   	}
 	}
 	printf("\n");

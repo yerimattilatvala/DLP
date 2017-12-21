@@ -1,5 +1,5 @@
 FUENTE = p3
-PRUEBA = practica3_text
+PRUEBA = prueba.txt
 
 all: compile run
 
