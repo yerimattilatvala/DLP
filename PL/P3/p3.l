@@ -5,7 +5,7 @@
 
 %}
 numero [0-9]
-cadena \"[^"]+\"
+cadena \"[^"]*\"
 tecla [^ \n\t]
 variable [A-Za-z0-9]+
 int "-"?{numero}+
@@ -20,6 +20,8 @@ operacion [+"-"*/]{1}
 "->" {return FINPARAMETROS;};
 "Funcion" {return FUNCION;};
 "Al pulsar" {return HOTKEY;};
+"Intercambiar" {return REMAP;};
+"Hotstring" {return HOTSTRING;};
 "Abrir" {return ABRIR;};
 "Mensaje" {return MENSAJE;};
 "fin" {return FIN;};
@@ -27,8 +29,6 @@ operacion [+"-"*/]{1}
 "*"{variable}"*" {yylval.valStr = strdup(yytext); return GLOBAL;};
 {cadena} {yylval.valStr = strdup(yytext); return CADENA;};
 {tecla} {yylval.valStr = strdup(yytext); return TECLA;};
-.;
-
+. {/**/};
+\n {/**/};
 %%
-
-
