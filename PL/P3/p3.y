@@ -386,7 +386,7 @@ extern FILE *yyin;
 	
 	fclose(f);
 	if (fatal_error){/* Por si algo no cuadra con la gramática*/
-		printf("Línea %d: Construcción no válida\n",yylineno);
+		printf("Línea %d: Construcción no válida, falta idetificador de instrucción inicial o la instrucción no está permitida en este contexto.\n",yylineno);
 	}
 	if (error == 0){
 		borrado = remove(file);
