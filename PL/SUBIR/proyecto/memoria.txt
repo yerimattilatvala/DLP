@@ -1,0 +1,139 @@
+***** Proyecto : Traductor de pseudocódigo a AutoHotkey
+***** Autor1: Yeray Méndez Romero
+***** Login1: yeray.mendez
+***** Autor2: Daniel Rivera López
+***** Login2: d.rivera1
+
+-Desarrollo:
+    La práctica se ha desarrollado utilizando las herramientas FLEX y Bison, el lenguaje de programación C, el compilador GCC sobre la plataforma Linux
+    y el programa AutoHotkey para comprobar la salida del programa. AutoHotkey es un programa libre y de código abierto que permite automatizar una gran 
+    variedad de operaciones repetitivas en Windows, por ejemplo:
+        -Reasignación del teclado. 
+        -Apertura de programas.
+        -Ejecución de comandos.
+        -Control del cursor del ratón con el teclado.
+        -Relleno de formularios.
+        -Supervisión del sistema.
+        -Definición de funciones.
+        -etc
+
+-Objetivo:
+    El objetivo que se quería alcanzar con este proyecto era el de proporcionar una forma cómoda para definir una serie de operaciones y comandos
+    en AutoHotkey. Debido al amplio abanico de funcionalidades que nos ofrece AutoHotkey, nos hemos visto obligados a acotar el proyecto a unas
+    operaciones concretas que mencionamos a continuación :
+        -Reasignación del teclado.
+		-Hotstrings.
+		-Definir acciones a realizar al pulsar una tecla (Hotkeys).
+        -Apertura de programas.
+		-Mostrar un mensaje por pantalla.
+        -Definición de funciones y variables.
+		
+-Ficheros:
+	Makefile		//Para facilitar compilación/ejecución
+	p3.l			//Reglas de FLEX
+	p3.y			//Reglas de BISON
+	prueba.txt		//Fichero de prueba
+	fichero.ahk		//Fichero de salida generado
+
+-Funcionamiento:
+    El programa recibirá como parámetro de entrada un fichero de texto con un pseudocódigo de las tareas que queremos que realice AutoHotkey y 
+    devuelve un fichero con extensión "ahk" con las instrucciones traducidas a código de AutoHotkey.
+    La operaciones del fichero de entrada están definidas de la siguiente manera :
+	
+		Las palabras reservadas son: Al pulsar, Abrir, Mensaje, fin, Intercambiar, Hotstring, Funcion, return, =         , ->            y Llamar 
+		Con sus tokens:              HOTKEY,    ABRIR, MENSAJE, FIN, REMAP,        HOTSTRING, FUNCION, RETURN, ASIGNACION, FINPARAMETROS y LLAMADAFUNCION
+		
+		El resto de tokens:
+		TECLAS: son un único carácter separado por espacios
+		CADENA: secuencia de carácteres entre ""
+		DIGITO: un int o un double
+		OPERACION: +, -, * o /
+		VAR: secuencia de letras y números entre ()
+		GLOBAL: secuencia de letras y números entre **
+		
+		Una vez definidos los tokens, tenemos las siguientes reglas en la gramática:
+			S : e | comando e ;
+			e : e x | x;
+			x : hotkey | hotstring | remap | funcion | llamarFun | print_asignacion valor 
+			print_asignacion : VAR ASIGNACION
+			valor : DIGITO
+			hotstring : HOTSTRING TECLA CADENA FIN
+			remap : REMAP TECLA TECLA FIN
+			hotkey : HOTKEY tecla_print_aux comando FIN 
+			comando : comando accion | accion
+			accion : ABRIR CADENA | MENSAJE CADENA 
+			funcion : funcion_print_aux cuerpoFuncion FIN
+			funcion_print_aux : FUNCION print_cadena parametro 
+			cuerpoFuncion : comando | print_return 
+			print_return : RETURN VAR OPERACION VAR 
+			llamarFun: LLAMADAFUNCION print_cadena parametro FIN 
+			parametro : | parametro print_var | parametro print_var FINPARAMETROS 
+			print_var: VAR | GLOBAL 
+			tecla_print_aux : TECLA
+			print_cadena : CADENA 
+			
+			*NOTA*: aquellas reglas con print en su nombre se utilizan como auxiliares para poder traducir el pseudocódigo sin almacenar las instrucciones 
+			y por lo tanto ahorrar memoria durante la ejecución del traductor.
+	
+		Un ejemplo de pseudocódigo sería el siguiente(los cambios de línea e indentado son opcionales y se han utilizado por claridad):
+		
+			Al pulsar x
+				Abrir "Notepad"
+				Mensaje "Block de notas abierto"
+			fin
+			
+			Intercambiar e f fin
+			
+			Hotstring a "hola" fin
+			
+			(tiempo) = "aaa"
+			
+			Funcion "Add" (x) (y) ->
+				return (x) + (y)
+			fin
+			
+			Funcion "abrirTerminal" 
+				Abrir "Notepad"
+				Mensaje "Block de notas abierto"
+			fin
+			
+			Llamar "abrirTerminal" 
+
+    Los caracteres del fichero son analizados por el analizador léxico(fichero "p3.l") que enviará los tokens al analizador sintáctico(fichero "p3.y")
+    donde se procesarán las operaciones necesarias de la gramática.
+    En caso de producirse un error durante la traducción esté será reportado por terminal al usuario junto con una descripción del problema, es posible
+	que un error esté enmascarando a otros que aparecerán posteriormente cuando este sea solucionado, además la línea reportada de error puede venir 
+	dada por una inferior en el caso de que la instrucción errónea necesite algún token de cierre. Además de estos errores gramaticales también nos informará
+	si hemos utilizado una variable o función no declarada y en el caso de que el número de parámetros en la llamada sea incorrecto.
+	
+    La salida será un fichero.ahk con instrucciones del siguiente tipo(traducción del ejemplo anterior):
+	
+		x::
+			Run Notepad
+			MsgBox, Block de notas abierto
+		return
+		
+		e::f
+		
+		::a::hola
+		
+		tiempo="aaa"
+		
+		Add(x, y)
+		{
+			return x + y 
+		}
+		
+		abrirTerminal()
+		{
+			Run Notepad
+			MsgBox, Block de notas abierto
+		}
+		
+		abrirTerminal()
+
+-Compilación/ejecución:
+    Se ha incluido un Makefile para agilizar la compilación del programa y ejecución del fichero de prueba(prueba.txt):
+		-$ make    		//Para compilar el programa y ejecutar el fichero de prueba.
+		-$ make run   	//Para ejecutar el fichero de prueba redirigiendo la entrada(./program < prueba).
+		-$ make run2   	//Para ejecutar el fichero de prueba pasándolo como parámetro(./program prueba).

@@ -1,0 +1,15 @@
+Al pulsar x
+Abrir "Notepad"
+Mensaje "Block de notas abierto"
+fin
+Intercambiar e f fin
+Hotstring a "hola" fin
+(tiempo) = "aaa"
+Funcion "Add" (x) (y) ->
+return (x) + (y)
+fin
+Funcion "abrirTerminal" 
+Abrir "Notepad"
+Mensaje "Block de notas abierto"
+fin
+Llamar "abrirTerminal" 

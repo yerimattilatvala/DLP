@@ -27,6 +27,13 @@
         -Apertura de programas.
 		-Mostrar un mensaje por pantalla.
         -Definición de funciones y variables.
+		
+-Ficheros:
+	Makefile		//Para facilitar compilación/ejecución
+	p3.l			//Reglas de FLEX
+	p3.y			//Reglas de BISON
+	prueba.txt		//Fichero de prueba
+	fichero.ahk		//Fichero de salida generado
 
 -Funcionamiento:
     El programa recibirá como parámetro de entrada un fichero de texto con un pseudocódigo de las tareas que queremos que realice AutoHotkey y 
@@ -68,7 +75,7 @@
 			*NOTA*: aquellas reglas con print en su nombre se utilizan como auxiliares para poder traducir el pseudocódigo sin almacenar las instrucciones 
 			y por lo tanto ahorrar memoria durante la ejecución del traductor.
 	
-		Un ejemplo de pseudocódigo sería el siguiente(los cambios de linea e identado son opcionales y se han utilizado por claridad):
+		Un ejemplo de pseudocódigo sería el siguiente(los cambios de línea e indentado son opcionales y se han utilizado por claridad):
 		
 			Al pulsar x
 				Abrir "Notepad"
@@ -95,8 +102,8 @@
     Los caracteres del fichero son analizados por el analizador léxico(fichero "p3.l") que enviará los tokens al analizador sintáctico(fichero "p3.y")
     donde se procesarán las operaciones necesarias de la gramática.
     En caso de producirse un error durante la traducción esté será reportado por terminal al usuario junto con una descripción del problema, es posible
-	que un error esté enmascarando a otros que apareceran posteriormente cuando este sea solucionado, además la linea reportada de error puede venir 
-	dada por una inferior en el caso de que la instrucción erronea necesite algún token de cierre. Además de estos errores gramaticales también nos informará
+	que un error esté enmascarando a otros que aparecerán posteriormente cuando este sea solucionado, además la línea reportada de error puede venir 
+	dada por una inferior en el caso de que la instrucción errónea necesite algún token de cierre. Además de estos errores gramaticales también nos informará
 	si hemos utilizado una variable o función no declarada y en el caso de que el número de parámetros en la llamada sea incorrecto.
 	
     La salida será un fichero.ahk con instrucciones del siguiente tipo(traducción del ejemplo anterior):
@@ -125,5 +132,8 @@
 		
 		abrirTerminal()
 
-
-    Se ha incluido un Makefile para agilizar la compilación y ejecución y un fichero de prueba(prueba.txt).
+-Compilación/ejecución:
+    Se ha incluido un Makefile para agilizar la compilación del programa y ejecución del fichero de prueba(prueba.txt):
+		-$ make    		//Para compilar el programa y ejecutar el fichero de prueba.
+		-$ make run   	//Para ejecutar el fichero de prueba redirigiendo la entrada(./program < prueba).
+		-$ make run2   	//Para ejecutar el fichero de prueba pasándolo como parámetro(./program prueba).
